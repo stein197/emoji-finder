@@ -1,0 +1,24 @@
+{
+  "name": "@stein197/emoji-finder",
+  "version": "1.0.0",
+  "description": "Emoji finder app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stein197/emoji-finder.git"
+  },
+  "keywords": [
+    "emoji",
+    "finder",
+    "app"
+  ],
+  "author": "Nail' Gafarov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/stein197/emoji-finder/issues"
+  },
+  "homepage": "https://github.com/stein197/emoji-finder#readme"
+}
