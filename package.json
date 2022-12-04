@@ -4,7 +4,13 @@
   "description": "Emoji finder app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "sass": "sass --load-path=node_modules --style=compressed --embed-sources index.scss index.css",
+    "sass:watch": "sass --load-path=node_modules --style=compressed --embed-sources index.scss index.css --watch",
+    "webpack": "webpack",
+    "webpack:watch": "webpack --watch --mode=development",
+    "webpack:dev": "webpack --mode=development",
+    "build": "npm run sass && npm run webpack",
+    "build:dev": "npm run sass && npm run webpack:dev"
   },
   "repository": {
     "type": "git",
@@ -20,5 +26,21 @@
   "bugs": {
     "url": "https://github.com/stein197/emoji-finder/issues"
   },
-  "homepage": "https://github.com/stein197/emoji-finder#readme"
+  "homepage": "https://github.com/stein197/emoji-finder#readme",
+  "devDependencies": {
+    "@types/node": "18.11.10",
+    "@types/react": "18.0.26",
+    "@types/react-dom": "18.0.9",
+    "sass": "1.56.1",
+    "ts-loader": "9.4.2",
+    "ts-node": "10.9.1",
+    "typescript": "4.9.3",
+    "webpack": "5.75.0",
+    "webpack-cli": "5.0.0"
+  },
+  "dependencies": {
+    "@stein197/css-reset": "1.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
 }
