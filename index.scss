@@ -1,1 +1,27 @@
 @import "@stein197/css-reset/index";
+@import "bootstrap/dist/css/bootstrap.min";
+
+.control {
+	$border-width: 5px;
+
+	&::after {
+		content: "";
+		display: block;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		height: $border-width;
+		background-color: dodgerblue;
+		transform: scaleX(0);
+		transition: transform .5s linear;
+	}
+
+	&.focus::after {
+		transform: scaleX(1);
+	}
+
+	input {
+		border-bottom: $border-width solid lightgray;
+	}
+}

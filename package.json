@@ -39,8 +39,10 @@
     "webpack-cli": "5.0.0"
   },
   "dependencies": {
-    "@stein197/css-reset": "1.0.0",
+    "@stein197/css-reset": "1.1.0",
+    "bootstrap": "5.2.3",
     "react": "18.2.0",
+    "react-bootstrap": "2.6.0",
     "react-dom": "18.2.0"
   }
 }
