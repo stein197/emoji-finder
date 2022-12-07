@@ -1,3 +1,22 @@
+/**
+ * @typedef {{
+ * 	code: string;
+ * 	variations: {
+ * 		apple?: string;
+ * 		google?: string;
+ * 		facebook?: string;
+ * 		windows?: string;
+ * 		twitter?: string;
+ * 		joypixels?: string;
+ * 		samsung?: string;
+ * 		gmail?: string;
+ * 		softbank?: string;
+ * 		dcm?: string;
+ * 		kddi?: string;
+ * 	};
+ * 	tags: string[];
+ * }} Emoji
+ */
 // @ts-check
 const fs = require("fs");
 const https = require("https");
@@ -37,12 +56,13 @@ const ROW_INDEX_NAME = 14;
 
 /**
  * @param {string} data
- * @returns {{}[]}
+ * @returns {Emoji[]}
  */
 function parse(data) {
 	console.log("Parsing DOM...");
 	const dom = new jsdom.JSDOM(data);
 	console.log("Collecting data...");
+	/** @type {Emoji[]} */
 	const result = [];
 	try {
 		const tbodyElement = dom.window.document.body.querySelector("tbody")
