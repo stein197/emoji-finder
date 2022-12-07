@@ -1,9 +1,12 @@
 // @ts-check
+const fs = require("fs");
 const https = require("https");
+const path = require("path");
 const process = require("process");
 const jsdom = require("jsdom");
 
 const URL = "https://unicode.org/emoji/charts/full-emoji-list.html";
+const FILE_NAME = "emoji.json";
 const ROW_INDEx_CODE = 1;
 const ROW_INDEX_IMAGE_APPLE = 3;
 const ROW_INDEX_IMAGE_GOOGLE = 4;
@@ -23,7 +26,10 @@ const ROW_INDEX_NAME = 14;
 	https.get(URL, response => {
 		let data = "";
 		response.on("data", chunk => data += chunk);
-		response.on("end", () => console.log(parse(data).slice(0, 10)));
+		response.on("end", () => {
+			save(parse(data));
+			console.log(`Data has been generated successfully!`);
+		})
 	}).on("error", err => {
 		console.error(`Unable to request ${URL}: ${err.message}`)
 	});
@@ -71,6 +77,12 @@ function parse(data) {
 		console.log(`Unable to parse the data: ${e.message}`);
 	}
 	return result;
+}
+
+function save(emojiData) {
+	const filePath = path.normalize(path.resolve(__dirname, "..", FILE_NAME));
+	console.log(`Writing data to ${filePath}...`);
+	fs.writeFileSync(filePath, JSON.stringify(emojiData));
 }
 
 /**
