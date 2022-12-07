@@ -8,7 +8,6 @@ npm run build
 Then open `index.html` in a browser.
 
 ## NPM scripts
-- `clean` - Cleans `public` folder from build files
 - `sass` - Compiles SASS styles
 - `sass:watch` - Watches stylesheets and recompiles them when they change
 - `webpack` - Compiles TypeScript
