@@ -46,7 +46,12 @@ const ROW_INDEX_NAME = 14;
 		let data = "";
 		response.on("data", chunk => data += chunk);
 		response.on("end", () => {
-			save(parse(data));
+			try {
+				const emojiData = parse(data);
+				save(emojiData);
+			} catch (e) {
+				console.log(`Unable to parse data: ${e.message}`);
+			}
 			console.log(`Data has been generated successfully!`);
 		})
 	}).on("error", err => {
@@ -64,37 +69,33 @@ function parse(data) {
 	console.log("Collecting data...");
 	/** @type {Emoji[]} */
 	const result = [];
-	try {
-		const tbodyElement = dom.window.document.body.querySelector("tbody")
-		let currentCategoryName = "";
-		for (const trElement of Array.from(tbodyElement.children)) {
-			if (isCategoryName(trElement)) {
-				currentCategoryName = trElement.textContent.trim();
-				continue;
-			}
-			if (isHeaderRow(trElement))
-				continue;
-			const trChildren = trElement.children;
-			result.push({
-				code: trChildren[ROW_INDEx_CODE].textContent,
-				variations: {
-					apple: trChildren[ROW_INDEX_IMAGE_APPLE].querySelector("img")?.getAttribute("src") ?? null,
-					google: trChildren[ROW_INDEX_IMAGE_GOOGLE].querySelector("img")?.getAttribute("src") ?? null,
-					facebook: trChildren[ROW_INDEX_IMAGE_FACEBOOK].querySelector("img")?.getAttribute("src") ?? null,
-					windows: trChildren[ROW_INDEX_IMAGE_WINDOWS].querySelector("img")?.getAttribute("src") ?? null,
-					twitter: trChildren[ROW_INDEX_IMAGE_TWITTER].querySelector("img")?.getAttribute("src") ?? null,
-					joypixels: trChildren[ROW_INDEX_IMAGE_JOYPIXELS].querySelector("img")?.getAttribute("src") ?? null,
-					samsung: trChildren[ROW_INDEX_IMAGE_SAMSUNG].querySelector("img")?.getAttribute("src") ?? null,
-					gmail: trChildren[ROW_INDEX_IMAGE_GMAIL].querySelector("img")?.getAttribute("src") ?? null,
-					softbank: trChildren[ROW_INDEX_IMAGE_SOFTBANK].querySelector("img")?.getAttribute("src") ?? null,
-					dcm: trChildren[ROW_INDEX_IMAGE_DCM].querySelector("img")?.getAttribute("src") ?? null,
-					kddi: trChildren[ROW_INDEX_IMAGE_KDDI].querySelector("img")?.getAttribute("src") ?? null,
-				},
-				tags: [currentCategoryName, trChildren[ROW_INDEX_NAME].textContent.trim()].join(" ").split(/[^\p{L}\p{N}]/gu)
-			});
+	const tbodyElement = dom.window.document.body.querySelector("tbody")
+	let currentCategoryName = "";
+	for (const trElement of Array.from(tbodyElement.children)) {
+		if (isCategoryName(trElement)) {
+			currentCategoryName = trElement.textContent.trim();
+			continue;
 		}
-	} catch (e) {
-		console.log(`Unable to parse the data: ${e.message}`);
+		if (isHeaderRow(trElement))
+			continue;
+		const trChildren = trElement.children;
+		result.push({
+			code: trChildren[ROW_INDEx_CODE].textContent,
+			variations: {
+				apple: trChildren[ROW_INDEX_IMAGE_APPLE].querySelector("img")?.getAttribute("src") ?? null,
+				google: trChildren[ROW_INDEX_IMAGE_GOOGLE].querySelector("img")?.getAttribute("src") ?? null,
+				facebook: trChildren[ROW_INDEX_IMAGE_FACEBOOK].querySelector("img")?.getAttribute("src") ?? null,
+				windows: trChildren[ROW_INDEX_IMAGE_WINDOWS].querySelector("img")?.getAttribute("src") ?? null,
+				twitter: trChildren[ROW_INDEX_IMAGE_TWITTER].querySelector("img")?.getAttribute("src") ?? null,
+				joypixels: trChildren[ROW_INDEX_IMAGE_JOYPIXELS].querySelector("img")?.getAttribute("src") ?? null,
+				samsung: trChildren[ROW_INDEX_IMAGE_SAMSUNG].querySelector("img")?.getAttribute("src") ?? null,
+				gmail: trChildren[ROW_INDEX_IMAGE_GMAIL].querySelector("img")?.getAttribute("src") ?? null,
+				softbank: trChildren[ROW_INDEX_IMAGE_SOFTBANK].querySelector("img")?.getAttribute("src") ?? null,
+				dcm: trChildren[ROW_INDEX_IMAGE_DCM].querySelector("img")?.getAttribute("src") ?? null,
+				kddi: trChildren[ROW_INDEX_IMAGE_KDDI].querySelector("img")?.getAttribute("src") ?? null,
+			},
+			tags: [currentCategoryName, trChildren[ROW_INDEX_NAME].textContent.trim()].join(" ").split(/[^\p{L}\p{N}]/gu)
+		});
 	}
 	return result;
 }
