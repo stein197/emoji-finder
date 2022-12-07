@@ -11,7 +11,7 @@
     "webpack:dev": "webpack --mode=development",
     "build": "npm run sass && npm run webpack",
     "build:dev": "npm run sass && npm run webpack:dev",
-    "make:data": "node cli/make-data.js"
+    "make:emoji": "node cli/make-emoji.js"
   },
   "repository": {
     "type": "git",

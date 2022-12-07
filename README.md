@@ -16,3 +16,4 @@ Then open `index.html` in a browser.
 - `webpack:dev` - Compiles TypeScript in devmode
 - `build` - Builds the entire project (runs all previous scripts)
 - `build:dev` - Builds the entire project in devmode (runs all previous scripts)
+- `make:emoji` - Generates emoji data
