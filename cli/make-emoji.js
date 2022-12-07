@@ -49,10 +49,10 @@ const ROW_INDEX_NAME = 14;
 			try {
 				const emojiData = parse(data);
 				save(emojiData);
+				console.log(`Data has been generated successfully!`);
 			} catch (e) {
 				console.log(`Unable to parse data: ${e.message}`);
 			}
-			console.log(`Data has been generated successfully!`);
 		})
 	}).on("error", err => {
 		console.error(`Unable to request ${URL}: ${err.message}`)
