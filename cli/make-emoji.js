@@ -99,6 +99,9 @@ function parse(data) {
 	return result;
 }
 
+/**
+ * @param {Emoji[]} emojiData
+ */
 function save(emojiData) {
 	const filePath = path.normalize(path.resolve(__dirname, "..", FILE_NAME));
 	console.log(`Writing data to ${filePath}...`);
