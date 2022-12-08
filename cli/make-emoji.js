@@ -23,9 +23,9 @@ const https = require("https");
 const path = require("path");
 const process = require("process");
 const jsdom = require("jsdom");
+const config = require("../config.json");
 
 const URL = "https://unicode.org/emoji/charts/full-emoji-list.html";
-const FILE_NAME = "emoji.json";
 const ROW_INDEx_CODE = 1;
 const ROW_INDEX_IMAGE_APPLE = 3;
 const ROW_INDEX_IMAGE_GOOGLE = 4;
@@ -49,7 +49,7 @@ const ROW_INDEX_NAME = 14;
 			try {
 				console.log("Parsing DOM...");
 				const emojiData = parse(data);
-				const filePath = path.normalize(path.resolve(__dirname, "..", FILE_NAME));
+				const filePath = path.normalize(path.resolve(__dirname, "..", config.url.emoji));
 				console.log(`Writing data to ${filePath}...`);
 				fs.writeFileSync(filePath, JSON.stringify(emojiData));
 				console.log(`Data has been generated successfully!`);
