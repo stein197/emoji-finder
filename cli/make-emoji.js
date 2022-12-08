@@ -47,15 +47,18 @@ const ROW_INDEX_NAME = 14;
 		response.on("data", chunk => data += chunk);
 		response.on("end", () => {
 			try {
+				console.log("Parsing DOM...");
 				const emojiData = parse(data);
-				save(emojiData);
+				const filePath = path.normalize(path.resolve(__dirname, "..", FILE_NAME));
+				console.log(`Writing data to ${filePath}...`);
+				fs.writeFileSync(filePath, JSON.stringify(emojiData));
 				console.log(`Data has been generated successfully!`);
 			} catch (e) {
 				console.log(`Unable to parse data: ${e.message}`);
 			}
 		})
 	}).on("error", err => {
-		console.error(`Unable to request ${URL}: ${err.message}`)
+		console.error(`Unable to request ${URL}: ${err.message}\n${err.stack}`);
 	});
 })(...process.argv.slice(2));
 
@@ -64,9 +67,7 @@ const ROW_INDEX_NAME = 14;
  * @returns {Emoji[]}
  */
 function parse(data) {
-	console.log("Parsing DOM...");
 	const dom = new jsdom.JSDOM(data);
-	console.log("Collecting data...");
 	/** @type {Emoji[]} */
 	const result = [];
 	const tbodyElement = dom.window.document.body.querySelector("tbody")
@@ -98,15 +99,6 @@ function parse(data) {
 		});
 	}
 	return result;
-}
-
-/**
- * @param {Emoji[]} emojiData
- */
-function save(emojiData) {
-	const filePath = path.normalize(path.resolve(__dirname, "..", FILE_NAME));
-	console.log(`Writing data to ${filePath}...`);
-	fs.writeFileSync(filePath, JSON.stringify(emojiData));
 }
 
 /**
