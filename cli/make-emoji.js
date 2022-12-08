@@ -1,6 +1,6 @@
 /**
  * @typedef {{
- * 	code: string;
+ * 	codes: string[];
  * 	variations: {
  * 		apple?: string;
  * 		google?: string;
@@ -80,21 +80,21 @@ function parse(data) {
 			continue;
 		const trChildren = trElement.children;
 		result.push({
-			code: trChildren[ROW_INDEx_CODE].textContent,
+			codes: trChildren[ROW_INDEx_CODE].textContent.split(/\s+/g).map(code => code.replace(/U\+(.+)/, "\\u{$1}")),
 			variations: {
-				apple: trChildren[ROW_INDEX_IMAGE_APPLE].querySelector("img")?.getAttribute("src") ?? null,
-				google: trChildren[ROW_INDEX_IMAGE_GOOGLE].querySelector("img")?.getAttribute("src") ?? null,
-				facebook: trChildren[ROW_INDEX_IMAGE_FACEBOOK].querySelector("img")?.getAttribute("src") ?? null,
-				windows: trChildren[ROW_INDEX_IMAGE_WINDOWS].querySelector("img")?.getAttribute("src") ?? null,
-				twitter: trChildren[ROW_INDEX_IMAGE_TWITTER].querySelector("img")?.getAttribute("src") ?? null,
-				joypixels: trChildren[ROW_INDEX_IMAGE_JOYPIXELS].querySelector("img")?.getAttribute("src") ?? null,
-				samsung: trChildren[ROW_INDEX_IMAGE_SAMSUNG].querySelector("img")?.getAttribute("src") ?? null,
-				gmail: trChildren[ROW_INDEX_IMAGE_GMAIL].querySelector("img")?.getAttribute("src") ?? null,
-				softbank: trChildren[ROW_INDEX_IMAGE_SOFTBANK].querySelector("img")?.getAttribute("src") ?? null,
-				dcm: trChildren[ROW_INDEX_IMAGE_DCM].querySelector("img")?.getAttribute("src") ?? null,
-				kddi: trChildren[ROW_INDEX_IMAGE_KDDI].querySelector("img")?.getAttribute("src") ?? null,
+				apple: trChildren[ROW_INDEX_IMAGE_APPLE]?.querySelector("img")?.getAttribute("src"),
+				google: trChildren[ROW_INDEX_IMAGE_GOOGLE]?.querySelector("img")?.getAttribute("src"),
+				facebook: trChildren[ROW_INDEX_IMAGE_FACEBOOK]?.querySelector("img")?.getAttribute("src"),
+				windows: trChildren[ROW_INDEX_IMAGE_WINDOWS]?.querySelector("img")?.getAttribute("src"),
+				twitter: trChildren[ROW_INDEX_IMAGE_TWITTER]?.querySelector("img")?.getAttribute("src"),
+				joypixels: trChildren[ROW_INDEX_IMAGE_JOYPIXELS]?.querySelector("img")?.getAttribute("src"),
+				samsung: trChildren[ROW_INDEX_IMAGE_SAMSUNG]?.querySelector("img")?.getAttribute("src"),
+				gmail: trChildren[ROW_INDEX_IMAGE_GMAIL]?.querySelector("img")?.getAttribute("src"),
+				softbank: trChildren[ROW_INDEX_IMAGE_SOFTBANK]?.querySelector("img")?.getAttribute("src"),
+				dcm: trChildren[ROW_INDEX_IMAGE_DCM]?.querySelector("img")?.getAttribute("src"),
+				kddi: trChildren[ROW_INDEX_IMAGE_KDDI]?.querySelector("img")?.getAttribute("src"),
 			},
-			tags: [currentCategoryName, trChildren[ROW_INDEX_NAME].textContent.trim()].join(" ").split(/[^\p{L}\p{N}]/gu)
+			tags: [currentCategoryName, trChildren[ROW_INDEX_NAME]?.textContent.trim()].join(" ").split(/[^\p{L}\p{N}]/gu)
 		});
 	}
 	return result;
