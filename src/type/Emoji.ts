@@ -1,5 +1,5 @@
 export type Emoji = {
-	codes: string[];
+	codes: number[];
 	variations: {
 		apple?: string;
 		google?: string;

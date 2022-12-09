@@ -1,6 +1,6 @@
 /**
  * @typedef {{
- * 	codes: string[];
+ * 	codes: number[];
  * 	variations: {
  * 		apple?: string;
  * 		google?: string;
@@ -44,7 +44,7 @@ const ROW_INDEX_NAME = 14;
 	console.log(`Requesting ${URL}...`)
 	https.get(URL, response => {
 		let data = "";
-		response.on("data", chunk => data += chunk);
+		response.on("data", chunk => data += chunk.toString());
 		response.on("end", () => {
 			try {
 				console.log("Parsing DOM...");
@@ -81,7 +81,7 @@ function parse(data) {
 			continue;
 		const trChildren = trElement.children;
 		result.push({
-			codes: trChildren[ROW_INDEx_CODE].textContent.split(/\s+/g).map(code => code.replace(/U\+(.+)/, "\\u{$1}")),
+			codes: trChildren[ROW_INDEx_CODE].textContent.split(/\s+/g).map(code => +`0x${code.replace(/U\+/, "")}`),
 			variations: {
 				apple: trChildren[ROW_INDEX_IMAGE_APPLE]?.querySelector("img")?.getAttribute("src"),
 				google: trChildren[ROW_INDEX_IMAGE_GOOGLE]?.querySelector("img")?.getAttribute("src"),
