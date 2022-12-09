@@ -1,6 +1,16 @@
 @import "@stein197/css-reset/index";
 @import "bootstrap/dist/css/bootstrap.min";
 
+html,
+body,
+main {
+	min-height: 100vh;
+}
+
+.h-full {
+	height: 100vh;
+}
+
 .control {
 	$border-width: 5px;
 
@@ -23,5 +33,16 @@
 
 	input {
 		border-bottom: $border-width solid lightgray;
+		animation: name duration timing-function delay iteration-count direction fill-mode;
+	}
+}
+
+@keyframes spin-clockwise {
+	0% {
+		transform: rotate(0turn);
+	}
+
+	100% {
+		transform: rotate(1turn);
 	}
 }

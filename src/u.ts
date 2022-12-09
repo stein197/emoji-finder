@@ -1,19 +1,5 @@
+import * as object from "@stein197/util/object";
 import ResponseError from "error/ResponseError";
-
-/**
- * The same as {@link Object.freeze} but performs it recursively.
- * @param object Object to deeply freeze.
- */
-export function deepFreeze(object: any): void {
-	if (object == null || typeof object !== "object")
-		return;
-	for (const key in object) {
-		const child = object[key];
-		if (child != null && !Object.isFrozen(child))
-			deepFreeze(child);
-	}
-	Object.freeze(object);
-}
 
 /**
  * Loads and parses JSON file and returns the resulting JSON.
@@ -27,6 +13,6 @@ export async function loadJSON<T>(url: string, log: boolean = false): Promise<T>
 	if (!response.ok)
 		throw new ResponseError(response);
 	const data: T = await response.json();
-	deepFreeze(data);
+	object.deepFreeze(data);
 	return data;
 }
