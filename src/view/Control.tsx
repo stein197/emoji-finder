@@ -19,9 +19,13 @@ export default class Control extends React.Component<Props, State> {
 	public override render(): React.ReactNode {
 		return (
 			<div className={this.className}>
-				<input className={this.props.className} placeholder={this.props.placeholder} onFocus={this.onFocus} onBlur={this.onBlur} type="text" />
+				<input className={this.props.className} onInput={this.onInput} placeholder={this.props.placeholder} onFocus={this.onFocus} onBlur={this.onBlur} type="text" />
 			</div>
 		);
+	}
+
+	private readonly onInput = (e: React.SyntheticEvent<HTMLInputElement, InputEvent>) => {
+		this.props.onChange?.((e.target as HTMLInputElement).value);
 	}
 
 	private readonly onFocus = () => {
@@ -34,8 +38,22 @@ export default class Control extends React.Component<Props, State> {
 }
 
 type Props = {
-	className?: string;
+
+	/**
+	 * Handler that fires each time input changes it's value.
+	 * @param value Current input's value.
+	 */
+	onChange?(value: string): void;
+
+	/**
+	 * Text to show in `placeholder` attribute.
+	 */
 	placeholder?: string;
+
+	/**
+	 * Additional CSS classnames.
+	 */
+	className?: string;
 }
 
 type State = {
