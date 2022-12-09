@@ -6,7 +6,7 @@ import type Application from "Application";
 
 export default class App extends React.Component<Props, State> {
 
-	declare applicationContext: React.Context<Application>;
+	private readonly applicationContext: React.Context<Application>;
 
 	public constructor(props: Props) {
 		super(props);
@@ -33,7 +33,7 @@ export default class App extends React.Component<Props, State> {
 						<section className="h-full d-flex align-items-center">
 							<div className="container text-center">
 								<Spinner r="50" color="lightblue" width="5" duration=".5" />
-								<p className="fs-1">Loading...</p>
+								<p className="fs-1" style={{color: "lightblue"}}>Loading...</p>
 							</div>
 						</section>
 					</Case>
