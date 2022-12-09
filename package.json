@@ -45,6 +45,7 @@
   "dependencies": {
     "@stein197/css-reset": "1.1.0",
     "@stein197/observer": "1.3.0",
+    "@stein197/react-ui": "1.2.0",
     "@stein197/util": "1.7.0",
     "bootstrap": "5.2.3",
     "react": "18.2.0",
