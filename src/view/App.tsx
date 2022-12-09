@@ -6,14 +6,14 @@ import type Application from "Application";
 
 export default class App extends React.Component<Props, State> {
 
-	private readonly applicationContext: React.Context<Application>;
+	private readonly rootContext: React.Context<Application>;
 
 	public constructor(props: Props) {
 		super(props);
 		this.state = {
 			state: "pending"
 		};
-		this.applicationContext = React.createContext(props.application);
+		this.rootContext = React.createContext(props.application);
 	}
 
 	public override componentDidMount(): void {
@@ -25,7 +25,7 @@ export default class App extends React.Component<Props, State> {
 	}
 
 	public override render(): React.ReactNode {
-		const ApplicationContext = this.applicationContext;
+		const ApplicationContext = this.rootContext;
 		return (
 			<ApplicationContext.Provider value={this.props.application}>
 				<Switch value={this.state.state}>
