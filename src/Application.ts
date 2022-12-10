@@ -3,6 +3,7 @@ import ReactDOMClient from "react-dom/client";
 import {EventDispatcher} from "@stein197/observer";
 import App from "view/App";
 import * as u from "u";
+import * as context from "view/context";
 import type {EventEmitter} from "@stein197/observer";
 import type {ApplicationEvent} from "type/ApplicationEvent";
 import type {Config} from "type/Config";
@@ -29,6 +30,7 @@ export default class Application implements EventEmitter<ApplicationEvent> {
 	public constructor(private readonly rootElement: HTMLElement) {}
 
 	public run(): void {
+		context.set(this);
 		this.render();
 		this.load();
 	}

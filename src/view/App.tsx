@@ -1,19 +1,19 @@
 import React from "react";
-import Control from "view/Control";
 import Spinner from "view/Spinner";
 import {Switch, Case} from "@stein197/react-ui/Switch";
+import Finder from "view/Finder";
+import * as context from "view/context";
 import type Application from "Application";
 
 export default class App extends React.Component<Props, State> {
 
-	private readonly rootContext: React.Context<Application>;
+	public static readonly contextType: React.Context<Application> = context.get();
 
 	public constructor(props: Props) {
 		super(props);
 		this.state = {
 			state: "pending"
 		};
-		this.rootContext = React.createContext(props.application);
 	}
 
 	public override componentDidMount(): void {
@@ -25,7 +25,7 @@ export default class App extends React.Component<Props, State> {
 	}
 
 	public override render(): React.ReactNode {
-		const ApplicationContext = this.rootContext;
+		const ApplicationContext = App.contextType;
 		return (
 			<ApplicationContext.Provider value={this.props.application}>
 				<Switch value={this.state.state}>
@@ -40,7 +40,7 @@ export default class App extends React.Component<Props, State> {
 					<Case value="loaded">
 						<section>
 							<div className="container">
-								<Control className="py-2 w-100 fs-2" placeholder="Find an Emoji" />
+								<Finder data={this.props.application.emoji!} />
 							</div>
 						</section>
 					</Case>
