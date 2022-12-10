@@ -9,6 +9,7 @@ Then open `index.html` in a browser.
 
 ## config.json file
 - `log` - Enables logging
+- `pagination` - How many emoji items to show at once
 	- `url` - Contains different URLs
 		- `emoji` - A URL to Emoji JSON data file
 
