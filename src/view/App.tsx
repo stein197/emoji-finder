@@ -39,7 +39,7 @@ export default class App extends React.Component<Props, State> {
 					</Case>
 					<Case value="loaded">
 						<section className="h-full">
-							<div className="h-100 container">
+							<div className="h-100 container d-flex flex-column flex-nowrap">
 								<Finder data={this.props.application.emoji!} />
 							</div>
 						</section>
