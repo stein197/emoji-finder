@@ -1,5 +1,5 @@
 import React from "react";
-import Spinner from "view/Spinner";
+import Spinner from "@stein197/react-ui/Spinner";
 import {Switch, Case} from "@stein197/react-ui/Switch";
 import Finder from "view/Finder";
 import * as context from "view/context";
@@ -32,7 +32,7 @@ export default class App extends React.Component<Props, State> {
 					<Case value="pending">
 						<section className="h-full d-flex align-items-center">
 							<div className="container text-center">
-								<Spinner r="50" color="lightblue" width="5" duration=".5" />
+								<Spinner r="50" strokeColor="lightblue" strokeWidth="5" duration=".5" />
 								<p className="fs-1" style={{color: "lightblue"}}>Loading...</p>
 							</div>
 						</section>
