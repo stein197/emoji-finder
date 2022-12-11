@@ -1,9 +1,9 @@
 import React from "react";
 import Foreach from "@stein197/react-ui/Foreach";
-import EmojiTableRow from "./EmojiTableRow";
+import EmojiListItem from "./EmojiListItem";
 import type {Emoji} from "type/Emoji";
 
-export default class EmojiTable extends React.Component<Props, State> {
+export default class EmojiList extends React.Component<Props, State> {
 
 	private readonly ref: React.RefObject<HTMLTableElement> = React.createRef();
 
@@ -33,32 +33,15 @@ export default class EmojiTable extends React.Component<Props, State> {
 
 	public override render(): React.ReactNode {
 		return (
-			<table ref={this.ref} className={this.className}>
-				<thead>
-					<tr>
-						<th>Emoji</th>
-						<th>Apple</th>
-						<th>Google</th>
-						<th>Facebook</th>
-						<th>Windows</th>
-						<th>Twitter</th>
-						<th>JoyPixels</th>
-						<th>Samsung</th>
-						<th>GMail</th>
-						<th>SoftBank</th>
-						<th>DCM</th>
-						<th>KDDI</th>
-						<th>Copy</th>
-					</tr>
-				</thead>
-				<tbody>
-					<Foreach data={this.props.data.slice(0, this.state.showCount)}>
-						{emoji => (
-							<EmojiTableRow key={emoji.codes.join("-")} data={emoji} />
-						)}
-					</Foreach>
-				</tbody>
-			</table>
+			<div className="row gx-3 gy-3">
+				<Foreach data={this.props.data.slice(0, this.state.showCount)}>
+					{emoji => (
+						<div key={emoji.codes.join("-")} className="col col-6 col-md-4 col-lg-3 col-xl-2">
+							<EmojiListItem data={emoji} />
+						</div>
+					)}
+				</Foreach>
+			</div>
 		);
 	}
 

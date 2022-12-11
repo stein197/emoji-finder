@@ -1,6 +1,6 @@
 import React from "react";
 import Control from "view/Control";
-import EmojiTable from "view/EmojiTable";
+import EmojiList from "view/EmojiList";
 import * as context from "view/context";
 import type {Emoji} from "type/Emoji";
 import type Application from "Application";
@@ -14,9 +14,9 @@ export default class Finder extends React.Component<Props> {
 	public override render(): React.ReactNode {
 		return (
 			<div className="h-100 d-flex flex-column flex-nowrap">
-				<Control className="py-2 w-100 fs-2" placeholder="Find an Emoji" />
-				<div className="flex-grow-1 overflow-y-scroll">
-					<EmojiTable data={this.props.data} pagination={this.context.config!.pagination} />
+				<Control className="py-2 w-100 fs-2 mb-2" placeholder="Find an Emoji" />
+				<div className="flex-grow-1 overflow-y-scroll overflow-x-hidden">
+					<EmojiList data={this.props.data} pagination={this.context.config!.pagination} />
 				</div>
 			</div>
 		);
