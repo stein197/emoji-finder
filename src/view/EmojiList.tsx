@@ -5,30 +5,11 @@ import type {Emoji} from "type/Emoji";
 
 export default class EmojiList extends React.Component<Props, State> {
 
-	private readonly ref: React.RefObject<HTMLTableElement> = React.createRef();
-
-	private get className(): string {
-		const result = [
-			"table", "text-center"
-		];
-		if (this.props.className)
-			result.push(this.props.className);
-		return result.join(" ");
-	}
-
 	public constructor(props: Props) {
 		super(props);
 		this.state = {
 			showCount: this.props.pagination
 		};
-	}
-
-	public override componentDidMount(): void {
-		window.document.addEventListener("scroll", this.onScroll);
-	}
-
-	public override componentWillUnmount(): void {
-		window.document.removeEventListener("scroll", this.onScroll);
 	}
 
 	public override render(): React.ReactNode {
@@ -43,15 +24,6 @@ export default class EmojiList extends React.Component<Props, State> {
 				</Foreach>
 			</div>
 		);
-	}
-
-	private readonly onScroll = () => {
-		const tableElement = this.ref.current!;
-		const tableRect = tableElement.getBoundingClientRect();
-		if (0 <= tableRect.bottom && tableRect.bottom <= window.innerHeight && this.state.showCount < this.props.data.length)
-			this.setState({
-				showCount: this.state.showCount + this.props.pagination
-			});
 	}
 }
 
