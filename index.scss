@@ -12,6 +12,10 @@ main {
 	height: 100vh;
 }
 
+.overflow-y-scroll {
+	overflow-y: scroll;
+}
+
 .control {
 	$border-width: 5px;
 

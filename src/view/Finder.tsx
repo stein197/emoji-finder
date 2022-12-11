@@ -13,10 +13,12 @@ export default class Finder extends React.Component<Props> {
 
 	public override render(): React.ReactNode {
 		return (
-			<>
-				<Control className="py-2 w-100 fs-2 position-sticky" placeholder="Find an Emoji" />
-				<EmojiTable data={this.props.data} pagination={this.context.config!.pagination} />
-			</>
+			<div className="h-100 d-flex flex-column flex-nowrap">
+				<Control className="py-2 w-100 fs-2" placeholder="Find an Emoji" />
+				<div className="flex-grow-1 overflow-y-scroll">
+					<EmojiTable data={this.props.data} pagination={this.context.config!.pagination} />
+				</div>
+			</div>
 		);
 	}
 }

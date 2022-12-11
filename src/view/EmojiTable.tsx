@@ -7,6 +7,15 @@ export default class EmojiTable extends React.Component<Props, State> {
 
 	private readonly ref: React.RefObject<HTMLTableElement> = React.createRef();
 
+	private get className(): string {
+		const result = [
+			"table", "text-center"
+		];
+		if (this.props.className)
+			result.push(this.props.className);
+		return result.join(" ");
+	}
+
 	public constructor(props: Props) {
 		super(props);
 		this.state = {
@@ -24,7 +33,7 @@ export default class EmojiTable extends React.Component<Props, State> {
 
 	public override render(): React.ReactNode {
 		return (
-			<table ref={this.ref} className="table text-center">
+			<table ref={this.ref} className={this.className}>
 				<thead>
 					<tr>
 						<th>Emoji</th>
@@ -66,6 +75,7 @@ export default class EmojiTable extends React.Component<Props, State> {
 type Props = {
 	data: Emoji[];
 	pagination: number;
+	className?: string;
 }
 
 type State = {

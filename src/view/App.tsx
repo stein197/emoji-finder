@@ -38,8 +38,8 @@ export default class App extends React.Component<Props, State> {
 						</section>
 					</Case>
 					<Case value="loaded">
-						<section>
-							<div className="container">
+						<section className="h-full">
+							<div className="h-100 container">
 								<Finder data={this.props.application.emoji!} />
 							</div>
 						</section>
