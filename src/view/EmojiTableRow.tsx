@@ -6,7 +6,7 @@ export default class EmojiTableRow extends React.Component<Props> {
 	public override render(): React.ReactNode {
 		return (
 			<tr>
-				<td>{String.fromCodePoint(...this.props.data.codes)}</td>
+				<td className="fs-1">{String.fromCodePoint(...this.props.data.codes)}</td>
 				<td>
 					<img src={this.props.data.variations.apple} />
 				</td>
