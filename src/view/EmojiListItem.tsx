@@ -8,7 +8,7 @@ export default class EmojiListItem extends React.Component<Props> {
 			<div className="card h-100">
 				<div className="card-body d-flex flex-column">
 					<p className="card-title text-center fs-1">{String.fromCodePoint(...this.props.data.codes)}</p>
-					<pre>{this.props.data.codes.map(code => "\\u{" + code.toString(0x10).toUpperCase() + "}").join("\n")}</pre>
+					<p>{this.props.data.codes.map(code => code.toString(0x10).toUpperCase()).join(", ")}</p>
 					<button className="btn btn-dark w-100 mt-auto" onClick={this.onClick}>Copy</button>
 				</div>
 			</div>

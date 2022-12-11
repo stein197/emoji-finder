@@ -20,6 +20,14 @@ main {
 	overflow-x: hidden;
 }
 
+.btn:hover {
+	transform: scale(1.05);
+}
+
+.btn:active {
+	transform: scale(.95);
+}
+
 .control {
 	$border-width: 5px;
 
