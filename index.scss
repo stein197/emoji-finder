@@ -37,13 +37,3 @@ main {
 		animation: name duration timing-function delay iteration-count direction fill-mode;
 	}
 }
-
-@keyframes spin-clockwise {
-	0% {
-		transform: rotate(0turn);
-	}
-
-	100% {
-		transform: rotate(1turn);
-	}
-}
