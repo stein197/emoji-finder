@@ -8,6 +8,7 @@ npm run build
 Then open `index.html` in a browser.
 
 ## Directory structure
+- `cli/` - Node.js scripts
 - `src/` - TypeScript source code
 	- `error/` - Error classes
 	- `type/` - TypeScript types
