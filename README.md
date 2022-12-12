@@ -7,6 +7,17 @@ npm run build
 ```
 Then open `index.html` in a browser.
 
+## Directory structure
+- `src/` - TypeScript source code
+	- `error/` - Error classes
+	- `type/` - TypeScript types
+	- `view/` - React components
+	- `worker/` - Web workers
+- `config.json` - The main app configuration file
+- `index.html` - HTML entry point
+- `index.scss` - SCSS entry point
+- `index.ts` - TypeScript entry point
+
 ## config.json file
 - `log` - Enables logging
 - `pagination` - How many emoji items to show at once
