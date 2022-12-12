@@ -10,7 +10,7 @@ export default class EmojiListItem extends React.Component<Props> {
 				<div className="card-body d-flex flex-column">
 					<p className="card-title text-center fs-1">{String.fromCodePoint(...this.props.data.codes)}</p>
 					<p>{this.props.data.codes.map(code => code.toString(0x10).toUpperCase()).join(", ")}</p>
-					<TooltipButton className="btn btn-dark w-100 mt-auto" onClick={this.onClick} tooltipText="Copied!">Copy</TooltipButton>
+					<TooltipButton className="btn-dark w-100 mt-auto" onClick={this.onClick} tooltip="Copied!">Copy</TooltipButton>
 				</div>
 			</div>
 		);
