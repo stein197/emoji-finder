@@ -1,6 +1,6 @@
 /node_modules/
 /emoji.json
-/*.js
+/**/*.js
+/**/*.map
 /*.css
-/*.map
 /*.LICENSE.txt

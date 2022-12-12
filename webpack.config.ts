@@ -1,9 +1,18 @@
+import fs from "fs";
 import path from "path";
 
+const REGEX_EXT = /\.[^\.]+$/g;
+
 export default (...[, argv]) => ({
-	entry: path.resolve(__dirname, "index.ts"),
+	entry: {
+		index: path.resolve(__dirname, "index.ts"),
+		...Object.fromEntries(fs.readdirSync(path.resolve(__dirname, "src/worker")).map(fileName => [
+			`worker/${fileName.replace(REGEX_EXT, "")}`,
+			path.resolve(__dirname, "src/worker", fileName)
+		]))
+	},
 	output: {
-		filename: "index.js",
+		filename: "[name].js",
 		path: __dirname
 	},
 	devtool: "source-map",

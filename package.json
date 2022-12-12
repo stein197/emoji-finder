@@ -4,6 +4,7 @@
   "description": "Emoji finder app",
   "main": "index.js",
   "scripts": {
+    "clean": "rmdir /s /q worker 2>nul && del .\\*.js .\\*.map .\\*.css 2>nul",
     "sass": "sass --load-path=node_modules --style=compressed --embed-sources index.scss index.css",
     "sass:watch": "sass --load-path=node_modules --style=compressed --embed-sources index.scss index.css --watch",
     "webpack": "webpack",

@@ -14,6 +14,7 @@ Then open `index.html` in a browser.
 		- `emoji` - A URL to Emoji JSON data file
 
 ## NPM scripts
+- `clean` - Cleans the directory from compiled files
 - `sass` - Compiles SASS styles
 - `sass:watch` - Watches stylesheets and recompiles them when they change
 - `webpack` - Compiles TypeScript
