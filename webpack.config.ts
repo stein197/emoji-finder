@@ -1,13 +1,12 @@
 import fs from "fs";
 import path from "path";
-
-const REGEX_EXT = /\.[^\.]+$/g;
+import * as file from "@stein197/util/file";
 
 export default (...[, argv]) => ({
 	entry: {
 		index: path.resolve(__dirname, "index.ts"),
 		...Object.fromEntries(fs.readdirSync(path.resolve(__dirname, "src/worker")).map(fileName => [
-			`worker/${fileName.replace(REGEX_EXT, "")}`,
+			`worker/${file.getBase(fileName)}`,
 			path.resolve(__dirname, "src/worker", fileName)
 		]))
 	},
