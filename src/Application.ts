@@ -3,25 +3,18 @@ import ReactDOMClient from "react-dom/client";
 import {EventDispatcher} from "@stein197/observer";
 import App from "view/App";
 import * as u from "u";
+import * as config from "config";
 import * as context from "view/context";
 import type {EventEmitter} from "@stein197/observer";
 import type {ApplicationEvent} from "type/ApplicationEvent";
-import type {Config} from "type/Config";
 import type {Emoji} from "type/Emoji";
 
 export default class Application implements EventEmitter<ApplicationEvent> {
 
-	private static readonly URL_CONFIG = "config.json";
-
 	private readonly eventDispatcher = new EventDispatcher<ApplicationEvent>();
-	private __config: Config | null = null;
 	private __emoji: Emoji[] | null = null;
 	private __loaded: boolean = false;
 	private __loadResult?: Error;
-
-	public get config(): Config | null {
-		return this.__config;
-	}
 
 	public get emoji(): Emoji[] | null {
 		return this.__emoji;
@@ -62,8 +55,8 @@ export default class Application implements EventEmitter<ApplicationEvent> {
 
 	private async load(): Promise<void> {
 		try {
-			this.__config = await u.loadJSON(Application.URL_CONFIG, true);
-			this.__emoji = await u.loadJSON(this.__config!.url.emoji, true);
+			await config.load();
+			this.__emoji = await u.loadJSON(config.get()!.url.emoji, true);
 			this.eventDispatcher.dispatch("Load");
 		} catch (e) {
 			this.__loadResult = e as Error;

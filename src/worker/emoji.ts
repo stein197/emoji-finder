@@ -1,13 +1,13 @@
 import * as u from "u";
+import * as config from "config";
 import type {Emoji} from "type/Emoji";
 import type {EmojiWorkerRequest} from "type/EmojiWorkerRequest";
 import type {EmojiWorkerResponse} from "type/EmojiWorkerResponse";
 
-const URL_DATA = "/emoji.json";
-
 window.onmessage = async (e: MessageEvent<EmojiWorkerRequest>): Promise<void> => {
 	try {
-		const data = await u.loadJSON<Emoji[]>(URL_DATA);
+		await config.load();
+		const data = await u.loadJSON<Emoji[]>(`/${config.get()!.url.emoji}`);
 		const result: EmojiWorkerResponse = {
 			id: e.data.id,
 			data: u.searchEmoji(e.data.q, data)
