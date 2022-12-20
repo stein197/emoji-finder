@@ -2,7 +2,7 @@ import * as object from "@stein197/util/object";
 import ResponseError from "app/error/ResponseError";
 import type {Emoji} from "app/type/Emoji";
 
-const REGEX_SPACE = /\s*/;
+const REGEX_SPACE = /\s+/;
 
 /**
  * Loads and parses JSON file and returns the resulting JSON.
@@ -21,6 +21,6 @@ export async function loadJSON<T>(url: string, log: boolean = false): Promise<T>
 }
 
 export function searchEmoji(query: string, data: Emoji[]): Emoji[] {
-	const queryTagArray = query.toLowerCase().split(REGEX_SPACE).filter(tag => tag);
+	const queryTagArray = query.trim().toLowerCase().split(REGEX_SPACE).filter(tag => tag);
 	return data.filter(emoji => queryTagArray.every(queryTag => emoji.tags.some(emojiTag => emojiTag.toLowerCase().indexOf(queryTag) >= 0)));
 }

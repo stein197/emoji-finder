@@ -7,7 +7,7 @@ describe("u.searchEmoji()", () => {
 	const data: Emoji[] = [
 		{tags: ["abc", "def", "ghi"], codes: [], variations: {}},
 		{tags: ["def", "ghi", "jkl"], codes: [], variations: {}},
-		{tags: ["mno", "pqr", "stu"], codes: [], variations: {}},
+		{tags: ["mno", "pqr", "stu"], codes: [], variations: {}}
 	];
 	it("Should return all elements when the query is empty", () => {
 		assert.deepStrictEqual(util.searchEmoji("", data), data);
@@ -19,15 +19,15 @@ describe("u.searchEmoji()", () => {
 		assert.deepStrictEqual(util.searchEmoji("x y z", data), []);
 	});
 	it("Should return correct result when the query and the tags in emoji have different character cases", () => {
-		assert.deepStrictEqual(util.searchEmoji("AB S U", data), [
+		assert.deepStrictEqual(util.searchEmoji("DEF H", data), [
 			{tags: ["abc", "def", "ghi"], codes: [], variations: {}},
-			{tags: ["mno", "pqr", "stu"], codes: [], variations: {}},
+			{tags: ["def", "ghi", "jkl"], codes: [], variations: {}}
 		]);
 	});
 	it("Should return correct result", () => {
-		assert.deepStrictEqual(util.searchEmoji("ab s u", data), [
+		assert.deepStrictEqual(util.searchEmoji("def h", data), [
 			{tags: ["abc", "def", "ghi"], codes: [], variations: {}},
-			{tags: ["mno", "pqr", "stu"], codes: [], variations: {}},
+			{tags: ["def", "ghi", "jkl"], codes: [], variations: {}}
 		]);
 	});
 });
