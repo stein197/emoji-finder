@@ -36,3 +36,4 @@ Then open `index.html` in a browser.
 - `build:dev` - Builds the entire project in devmode (runs all previous scripts)
 - `make:emoji` - Generates emoji data
 - `server` - Runs local server at `localhost:80`
+- `test` - Runs tests
