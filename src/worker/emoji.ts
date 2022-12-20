@@ -4,7 +4,6 @@ import type {EmojiWorkerRequest} from "type/EmojiWorkerRequest";
 import type {EmojiWorkerResponse} from "type/EmojiWorkerResponse";
 
 const URL_DATA = "/emoji.json";
-const REGEX_SPACE = /\s+/g;
 
 window.onmessage = async (e: MessageEvent<EmojiWorkerRequest>): Promise<void> => {
 	try {
