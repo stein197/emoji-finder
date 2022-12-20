@@ -1,4 +1,4 @@
-import * as u from "app/u";
+import * as util from "app/util";
 import type {Config} from "app/type/Config";
 
 const URL_CONFIG = "/config.json";
@@ -18,6 +18,6 @@ export function get(): Config | null {
  */
 export async function load(): Promise<Config> {
 	if (!config)
-		config = await u.loadJSON(URL_CONFIG);
+		config = await util.loadJSON(URL_CONFIG);
 	return config!;
 }

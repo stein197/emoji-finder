@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOMClient from "react-dom/client";
 import {EventDispatcher} from "@stein197/observer";
 import App from "app/view/App";
-import * as u from "app/u";
+import * as util from "app/util";
 import * as config from "app/config";
 import * as context from "app/view/context";
 import type {EventEmitter} from "@stein197/observer";
@@ -56,7 +56,7 @@ export default class Application implements EventEmitter<ApplicationEvent> {
 	private async load(): Promise<void> {
 		try {
 			await config.load();
-			this.__emoji = await u.loadJSON(config.get()!.url.emoji, true);
+			this.__emoji = await util.loadJSON(config.get()!.url.emoji, true);
 			this.eventDispatcher.dispatch("Load");
 		} catch (e) {
 			this.__loadResult = e as Error;
