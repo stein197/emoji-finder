@@ -1,5 +1,4 @@
 import assert from "assert";
-// import mocha from "mocha";
 import "mocha";
 import * as util from "app/util";
 import type {Emoji} from "app/type/Emoji";
