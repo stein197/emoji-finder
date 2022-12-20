@@ -1,9 +1,9 @@
 import React from "react";
 import Spinner from "@stein197/react-ui/Spinner";
 import {Switch, Case} from "@stein197/react-ui/Switch";
-import Finder from "view/Finder";
-import * as context from "view/context";
-import type Application from "Application";
+import Finder from "app/view/Finder";
+import * as context from "app/view/context";
+import type Application from "app/Application";
 
 export default class App extends React.Component<Props, State> {
 

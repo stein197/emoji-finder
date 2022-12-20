@@ -1,6 +1,6 @@
 import React from "react";
-import TooltipButton from "view/TooltipButton";
-import type {Emoji} from "type/Emoji";
+import TooltipButton from "app/view/TooltipButton";
+import type {Emoji} from "app/type/Emoji";
 
 export default class EmojiListItem extends React.Component<Props> {
 

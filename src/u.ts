@@ -1,6 +1,6 @@
 import * as object from "@stein197/util/object";
-import ResponseError from "error/ResponseError";
-import type {Emoji} from "type/Emoji";
+import ResponseError from "app/error/ResponseError";
+import type {Emoji} from "app/type/Emoji";
 
 const REGEX_SPACE = /\s*/;
 

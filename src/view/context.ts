@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React from "react";
-import type Application from "Application";
+import type Application from "app/Application";
 
 let context = React.createContext(null);
 

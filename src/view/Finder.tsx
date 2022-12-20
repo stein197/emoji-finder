@@ -1,7 +1,7 @@
 import React from "react";
-import EmojiList from "view/EmojiList";
-import * as config from "config";
-import type {Emoji} from "type/Emoji";
+import EmojiList from "app/view/EmojiList";
+import * as config from "app/config";
+import type {Emoji} from "app/type/Emoji";
 
 export default class Finder extends React.Component<Props> {
 

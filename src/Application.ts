@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOMClient from "react-dom/client";
 import {EventDispatcher} from "@stein197/observer";
-import App from "view/App";
-import * as u from "u";
-import * as config from "config";
-import * as context from "view/context";
+import App from "app/view/App";
+import * as u from "app/u";
+import * as config from "app/config";
+import * as context from "app/view/context";
 import type {EventEmitter} from "@stein197/observer";
-import type {ApplicationEvent} from "type/ApplicationEvent";
-import type {Emoji} from "type/Emoji";
+import type {ApplicationEvent} from "app/type/ApplicationEvent";
+import type {Emoji} from "app/type/Emoji";
 
 export default class Application implements EventEmitter<ApplicationEvent> {
 

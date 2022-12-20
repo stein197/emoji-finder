@@ -1,4 +1,4 @@
-import type {Emoji} from "type/Emoji";
+import type {Emoji} from "app/type/Emoji";
 
 export type EmojiWorkerResponse = {
 	id: number;

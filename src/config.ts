@@ -1,5 +1,5 @@
-import * as u from "u";
-import type {Config} from "type/Config";
+import * as u from "app/u";
+import type {Config} from "app/type/Config";
 
 const URL_CONFIG = "/config.json";
 let config: Config | null;

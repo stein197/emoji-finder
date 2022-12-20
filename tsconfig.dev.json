@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"target": "ESNext",
 		"jsx": "react",
-		"baseUrl": "src",
+		"baseUrl": ".",
 		"noImplicitAny": false,
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
@@ -10,6 +10,9 @@
 		"inlineSources": true,
 		"importsNotUsedAsValues": "remove",
 		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true
+		"allowSyntheticDefaultImports": true,
+		"paths": {
+			"app/*": ["src/*"]
+		}
 	}
 }

@@ -1,8 +1,8 @@
-import * as u from "u";
-import * as config from "config";
-import type {Emoji} from "type/Emoji";
-import type {EmojiWorkerRequest} from "type/EmojiWorkerRequest";
-import type {EmojiWorkerResponse} from "type/EmojiWorkerResponse";
+import * as u from "app/u";
+import * as config from "app/config";
+import type {Emoji} from "app/type/Emoji";
+import type {EmojiWorkerRequest} from "app/type/EmojiWorkerRequest";
+import type {EmojiWorkerResponse} from "app/type/EmojiWorkerResponse";
 
 window.onmessage = async (e: MessageEvent<EmojiWorkerRequest>): Promise<void> => {
 	try {

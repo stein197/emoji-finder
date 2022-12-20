@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import TSConfigPathsWebpackPlugin from "tsconfig-paths-webpack-plugin";
 import * as file from "@stein197/util/file";
 
 export default (...[, argv]) => ({
@@ -24,6 +25,9 @@ export default (...[, argv]) => ({
 		modules: [
 			path.resolve(__dirname, "node_modules"),
 			path.resolve(__dirname, "src")
+		],
+		plugins: [
+			new TSConfigPathsWebpackPlugin()
 		]
 	},
 	module: {

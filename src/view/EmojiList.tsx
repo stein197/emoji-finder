@@ -1,7 +1,7 @@
 import React from "react";
 import Foreach from "@stein197/react-ui/Foreach";
-import EmojiListItem from "./EmojiListItem";
-import type {Emoji} from "type/Emoji";
+import EmojiListItem from "app/view/EmojiListItem";
+import type {Emoji} from "app/type/Emoji";
 
 export default class EmojiList extends React.Component<Props, State> {
 
