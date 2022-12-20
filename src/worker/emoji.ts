@@ -9,10 +9,9 @@ const REGEX_SPACE = /\s+/g;
 window.onmessage = async (e: MessageEvent<EmojiWorkerRequest>): Promise<void> => {
 	try {
 		const data = await u.loadJSON<Emoji[]>(URL_DATA);
-		const qTags = e.data.q.split(REGEX_SPACE).filter(tag => tag);
 		const result: EmojiWorkerResponse = {
 			id: e.data.id,
-			data: data.filter(emoji => qTags.every(qTag => emoji.tags.some(emojiTag => emojiTag.indexOf(qTag) >= 0)))
+			data: u.searchEmoji(e.data.q, data)
 		};
 		window.postMessage(result);
 	} catch (err) {
