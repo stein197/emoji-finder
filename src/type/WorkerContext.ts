@@ -1,0 +1,1 @@
+export type WorkerContext = Pick<Window, "onmessage" | "postMessage">;
