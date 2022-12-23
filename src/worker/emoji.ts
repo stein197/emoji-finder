@@ -1,25 +1,30 @@
+import WorkerRunner from "app/WorkerRunner";
 import * as util from "app/util";
 import * as config from "app/config";
 import type {Emoji} from "app/type/Emoji";
 import type {EmojiWorkerRequest} from "app/type/EmojiWorkerRequest";
 import type {EmojiWorkerResponse} from "app/type/EmojiWorkerResponse";
 
-window.onmessage = async (e: MessageEvent<EmojiWorkerRequest>): Promise<void> => {
+(function main(): void {
+	const runner = new WorkerRunner<EmojiWorkerRequest, EmojiWorkerResponse>(window);
+	runner.handler = onMessage;
+	runner.run();
+})();
+
+async function onMessage(request: EmojiWorkerRequest): Promise<EmojiWorkerResponse> {
 	try {
 		await config.load();
 		const data = await util.loadJSON<Emoji[]>(`/${config.get()!.url.emoji}`);
-		const result: EmojiWorkerResponse = {
-			id: e.data.id,
-			data: util.searchEmoji(e.data.q, data)
+		return {
+			id: request.id,
+			data: util.searchEmoji(request.q, data)
 		};
-		window.postMessage(result);
 	} catch (err) {
-		const result: EmojiWorkerResponse = {
-			id: e.data.id,
+		return {
+			id: request.id,
 			error: {
 				message: String(err)
 			}
 		};
-		window.postMessage(result);
 	}
 }
