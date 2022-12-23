@@ -1,11 +1,12 @@
+import Config from "app/config";
 import WorkerRunner from "app/WorkerRunner";
 import * as util from "app/util";
-import * as config from "app/config";
 import type {Emoji} from "app/type/Emoji";
 import type {EmojiWorkerRequest} from "app/type/EmojiWorkerRequest";
 import type {EmojiWorkerResponse} from "app/type/EmojiWorkerResponse";
 
-let loaded = false;
+const config: Config = new Config(util.URL_CONFIG);
+let loaded: boolean = false;
 let data: Emoji[] = [];
 
 (function main(): void {
@@ -35,6 +36,6 @@ async function tryLoad(): Promise<void> {
 	if (loaded)
 		return;
 	await config.load();
-	data = await util.loadJSON<Emoji[]>(`/${config.get()!.url.emoji}`);
+	data = await util.loadJSON<Emoji[]>(`/${config.data!.url.emoji}`);
 	loaded = true;
 }

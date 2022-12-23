@@ -2,6 +2,8 @@ import * as object from "@stein197/util/object";
 import ResponseError from "app/error/ResponseError";
 import type {Emoji} from "app/type/Emoji";
 
+export const URL_CONFIG: string = "/config.json";
+
 const REGEX_SPACE = /\s+/;
 
 /**
