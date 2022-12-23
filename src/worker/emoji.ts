@@ -1,5 +1,5 @@
 import Config from "app/config";
-import WorkerRunner from "app/WorkerRunner";
+import SyncWorkerReceiver from "app/SyncWorkerReceiver";
 import * as util from "app/util";
 import type {Emoji} from "app/type/Emoji";
 import type {EmojiWorkerRequest} from "app/type/EmojiWorkerRequest";
@@ -10,7 +10,7 @@ let loaded: boolean = false;
 let data: Emoji[] = [];
 
 (function main(): void {
-	const runner = new WorkerRunner<EmojiWorkerRequest, EmojiWorkerResponse>(window);
+	const runner = new SyncWorkerReceiver<EmojiWorkerRequest, EmojiWorkerResponse>(window);
 	runner.handler = onMessage;
 	runner.run();
 })();
@@ -19,12 +19,10 @@ async function onMessage(request: EmojiWorkerRequest): Promise<EmojiWorkerRespon
 	try {
 		await tryLoad();
 		return {
-			id: request.id,
 			data: util.searchEmoji(request.q, data)
 		};
 	} catch (err) {
 		return {
-			id: request.id,
 			error: {
 				message: String(err)
 			}
