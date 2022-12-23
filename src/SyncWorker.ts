@@ -25,10 +25,11 @@ export default class SyncWorker<T, U> {
 	}
 
 	private onMessage = (e: MessageEvent<WorkerMessage<U>>): void => {
-		const callback = this.__postResolveCallbackMap[e.data.id];
+		const {id, data} = e.data;
+		const callback = this.__postResolveCallbackMap[id];
 		if (!callback)
 			return;
-		delete this.__postResolveCallbackMap[e.data.id];
-		callback(e.data.data);
+		delete this.__postResolveCallbackMap[id];
+		callback(data);
 	}
 }
