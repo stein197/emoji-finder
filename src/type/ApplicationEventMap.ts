@@ -1,4 +1,4 @@
-export type ApplicationEvent = {
+export type ApplicationEventMap = {
 
 	/**
 	 * Fires on application load.

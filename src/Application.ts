@@ -6,12 +6,12 @@ import * as util from "app/util";
 import * as config from "app/config";
 import * as context from "app/view/context";
 import type {EventEmitter} from "@stein197/observer";
-import type {ApplicationEvent} from "app/type/ApplicationEvent";
+import type {ApplicationEventMap} from "app/type/ApplicationEventMap";
 import type {Emoji} from "app/type/Emoji";
 
-export default class Application implements EventEmitter<ApplicationEvent> {
+export default class Application implements EventEmitter<ApplicationEventMap> {
 
-	private readonly eventDispatcher = new EventDispatcher<ApplicationEvent>();
+	private readonly eventDispatcher = new EventDispatcher<ApplicationEventMap>();
 	private __emoji: Emoji[] | null = null;
 	private __loaded: boolean = false;
 	private __loadResult?: Error;
@@ -28,18 +28,18 @@ export default class Application implements EventEmitter<ApplicationEvent> {
 		this.load();
 	}
 
-	public addEventListener<K extends keyof ApplicationEvent>(key: K, listener: ApplicationEvent[K]): void {
+	public addEventListener<K extends keyof ApplicationEventMap>(key: K, listener: ApplicationEventMap[K]): void {
 		if (key === "Load" && this.__loaded)
 			listener(this.__loadResult);
 		else
 			this.eventDispatcher.addEventListener(key, listener);
 	}
 
-	public removeEventListener<K extends keyof ApplicationEvent>(key: K, listener: ApplicationEvent[K]): void {
+	public removeEventListener<K extends keyof ApplicationEventMap>(key: K, listener: ApplicationEventMap[K]): void {
 		this.eventDispatcher.removeEventListener(key, listener);
 	}
 
-	public onceEventListener<K extends keyof ApplicationEvent>(key: K, listener: ApplicationEvent[K]): void {
+	public onceEventListener<K extends keyof ApplicationEventMap>(key: K, listener: ApplicationEventMap[K]): void {
 		if (key === "Load" && this.__loaded)
 			listener(this.__loadResult);
 		else
