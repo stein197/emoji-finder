@@ -5,6 +5,9 @@ import type {Emoji} from "app/type/Emoji";
 import type {EmojiWorkerRequest} from "app/type/EmojiWorkerRequest";
 import type {EmojiWorkerResponse} from "app/type/EmojiWorkerResponse";
 
+let loaded = false;
+let data: Emoji[] = [];
+
 (function main(): void {
 	const runner = new WorkerRunner<EmojiWorkerRequest, EmojiWorkerResponse>(window);
 	runner.handler = onMessage;
@@ -13,8 +16,7 @@ import type {EmojiWorkerResponse} from "app/type/EmojiWorkerResponse";
 
 async function onMessage(request: EmojiWorkerRequest): Promise<EmojiWorkerResponse> {
 	try {
-		await config.load();
-		const data = await util.loadJSON<Emoji[]>(`/${config.get()!.url.emoji}`);
+		await tryLoad();
 		return {
 			id: request.id,
 			data: util.searchEmoji(request.q, data)
@@ -27,4 +29,12 @@ async function onMessage(request: EmojiWorkerRequest): Promise<EmojiWorkerRespon
 			}
 		};
 	}
+}
+
+async function tryLoad(): Promise<void> {
+	if (loaded)
+		return;
+	await config.load();
+	data = await util.loadJSON<Emoji[]>(`/${config.get()!.url.emoji}`);
+	loaded = true;
 }
