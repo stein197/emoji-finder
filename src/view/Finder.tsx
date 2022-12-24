@@ -45,7 +45,7 @@ export default class Finder extends React.Component<Props, State> {
 						<div className="flex-grow-1 overflow-y-scroll overflow-x-hidden">
 							<EmojiList data={this.state.data} pagination={this.context.container.get(Config)!.data!.pagination} />
 						</div>
-						<div className="text-center py-2">
+						<div className="text-center py-3">
 							<button className="btn btn-dark">Load more</button>
 						</div>
 					</Case>
