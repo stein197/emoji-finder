@@ -41,7 +41,7 @@ const ROW_INDEX_IMAGE_KDDI = 13;
 const ROW_INDEX_NAME = 14;
 
 (function main(...args) {
-	console.log(`Requesting ${URL}...`)
+	console.log(`Requesting ${URL}...`);
 	https.get(URL, response => {
 		let data = "";
 		response.on("data", chunk => data += chunk.toString());
@@ -95,7 +95,7 @@ function parse(data) {
 				dcm: trChildren[ROW_INDEX_IMAGE_DCM]?.querySelector("img")?.getAttribute("src"),
 				kddi: trChildren[ROW_INDEX_IMAGE_KDDI]?.querySelector("img")?.getAttribute("src"),
 			},
-			tags: [currentCategoryName, trChildren[ROW_INDEX_NAME]?.textContent.toLowerCase().trim()].join(" ").split(/[^\p{L}\p{N}]/gu).filter((v, i, a) => a.indexOf(v) === i)
+			tags: [currentCategoryName, trChildren[ROW_INDEX_NAME]?.textContent.toLowerCase().trim()].join(" ").split(/[^\p{L}\p{N}]/gu).filter((v, i, a) => v && a.indexOf(v) === i)
 		});
 	}
 	return result;
