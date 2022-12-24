@@ -95,7 +95,7 @@ function parse(data) {
 				dcm: trChildren[ROW_INDEX_IMAGE_DCM]?.querySelector("img")?.getAttribute("src"),
 				kddi: trChildren[ROW_INDEX_IMAGE_KDDI]?.querySelector("img")?.getAttribute("src"),
 			},
-			tags: [currentCategoryName, trChildren[ROW_INDEX_NAME]?.textContent.trim()].join(" ").split(/[^\p{L}\p{N}]/gu)
+			tags: [currentCategoryName, trChildren[ROW_INDEX_NAME]?.textContent.toLowerCase().trim()].join(" ").split(/[^\p{L}\p{N}]/gu).filter((v, i, a) => a.indexOf(v) === i)
 		});
 	}
 	return result;
