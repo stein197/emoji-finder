@@ -10,7 +10,7 @@ let loaded: boolean = false;
 let data: Emoji[] = [];
 
 (function main(): void {
-	const runner = new SyncWorkerReceiver<EmojiWorkerRequest, EmojiWorkerResponse>(window);
+	const runner = new SyncWorkerReceiver<EmojiWorkerRequest, EmojiWorkerResponse>(self);
 	runner.handler = onMessage;
 	runner.run();
 })();

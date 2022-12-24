@@ -14,7 +14,7 @@ const REGEX_SPACE = /\s+/;
 export async function loadJSON<T>(url: string, log: boolean = false): Promise<T> {
 	if (log)
 		console.info(`Loading ${url}`);
-	const response = await window.fetch(url);
+	const response = await self.fetch(url);
 	if (!response.ok)
 		throw new ResponseError(response);
 	const data: T = await response.json();
