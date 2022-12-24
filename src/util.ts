@@ -3,6 +3,7 @@ import ResponseError from "app/error/ResponseError";
 import type {Emoji} from "app/type/Emoji";
 
 export const URL_CONFIG: string = "/config.json";
+export const URL_WORKER_EMOJI: string = "/worker/emoji.js";
 
 const REGEX_SPACE = /\s+/;
 

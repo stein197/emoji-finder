@@ -3,9 +3,9 @@ import type {Constructor} from "app/type/Constructor";
 
 export default class Container<T extends Loadable[]> {
 
-	private __loaded: boolean = false;
+	private readonly __data: Loadable[] = [];
 
-	public constructor(private readonly __data: T) {}
+	public constructor() {}
 
 	public get<U extends T[number]>(type: Constructor<U>): U | null {
 		for (const loadable of this.__data)
@@ -14,11 +14,8 @@ export default class Container<T extends Loadable[]> {
 		return null;
 	}
 
-	public async load(): Promise<void> {
-		if (this.__loaded)
-			return;
-		for (const loadable of this.__data)
-			await loadable.load();
-		this.__loaded = true;
+	public async register<U extends T[number]>(loadable: U): Promise<void> {
+		this.__data.push(loadable);
+		await loadable.load();
 	}
 }

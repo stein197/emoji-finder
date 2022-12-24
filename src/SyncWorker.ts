@@ -7,9 +7,10 @@ export default class SyncWorker<T, U> {
 	private readonly __worker: Worker;
 	private __id: number = 0;
 
-	public constructor(url: string) {
-		this.__worker = new Worker(url);
+	public constructor(private readonly __url: string) {
+		this.__worker = new Worker(__url);
 		this.__worker.onmessage = this.onMessage;
+		this.__worker.onerror = this.onError;
 	}
 
 	public post(data: T): Promise<U> {
@@ -32,5 +33,9 @@ export default class SyncWorker<T, U> {
 			return;
 		delete this.__postResolveCallbackMap[id];
 		callback(data);
+	}
+
+	private onError = (): void => {
+		throw new Error(`Unable to load worker at ${this.__url}`)
 	}
 }
