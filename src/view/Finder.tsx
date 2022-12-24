@@ -43,10 +43,10 @@ export default class Finder extends React.Component<Props, State> {
 					</Case>
 					<Case value={PromiseState.Fulfilled}>
 						<div className="flex-grow-1 overflow-y-scroll overflow-x-hidden">
-							<EmojiList data={this.state.data} pagination={this.context.container.get(Config)!.data!.pagination} />
+							<EmojiList data={this.state.data} />
 						</div>
 						<div className="text-center py-3">
-							<button className="btn btn-dark">Load more</button>
+							<button className="btn btn-dark" onClick={this.onLoadClick}>Load more</button>
 						</div>
 					</Case>
 					<Case value={PromiseState.Rejected}>
@@ -65,7 +65,7 @@ export default class Finder extends React.Component<Props, State> {
 			error: undefined
 		});
 		try {
-			const amount = this.state.amount ? this.state.amount : this.context.container.get(Config)!.data!.pagination;
+			const amount = this.context.container.get(Config)!.data!.pagination;
 			const searcher = this.context.container.get(EmojiSearcher)!;
 			const query = this.inputRef.current!.value;
 			const data = await searcher.search(query, amount);
@@ -83,6 +83,11 @@ export default class Finder extends React.Component<Props, State> {
 	}
 
 	private onInput = (): void => void this.update();
+
+	private onLoadClick = (): void => {
+		const amountStep = this.context.container.get(Config)!.data!.pagination;
+
+	}
 }
 
 type Props = {}
