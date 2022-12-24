@@ -35,22 +35,26 @@ export default class Finder extends React.Component<Props, State> {
 		return (
 			<>
 				<input ref={this.inputRef} type="text" className="form-control py-2 w-100 fs-2 my-3" placeholder="Find an Emoji" onInput={this.onInput} />
-				<div className="flex-grow-1 overflow-y-scroll overflow-x-hidden">
-					<Switch value={this.state.state}>
-						<Case value={PromiseState.Pending}>
-							<Spinner r="50" />
-						</Case>
-						<Case value={PromiseState.Fulfilled}>
+				<Switch value={this.state.state}>
+					<Case value={PromiseState.Pending}>
+						<div className="flex-grow-1 d-flex align-items-center justify-content-center">
+							<Spinner r="50" strokeWidth="5" />
+						</div>
+					</Case>
+					<Case value={PromiseState.Fulfilled}>
+						<div className="flex-grow-1 overflow-y-scroll overflow-x-hidden">
 							<EmojiList data={this.state.data} pagination={this.context.container.get(Config)!.data!.pagination} />
-						</Case>
-						<Case value={PromiseState.Rejected}>
+						</div>
+						<div className="text-center py-2">
+							<button className="btn btn-dark">Load more</button>
+						</div>
+					</Case>
+					<Case value={PromiseState.Rejected}>
+						<div className="flex-grow-1 d-flex align-items-center justify-content-center">
 							<ErrorAlert error={this.state.error!} />
-						</Case>
-					</Switch>
-				</div>
-				<div className="text-center py-2">
-					<button className="btn btn-dark">Load more</button>
-				</div>
+						</div>
+					</Case>
+				</Switch>
 			</>
 		);
 	}
