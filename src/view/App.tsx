@@ -1,4 +1,5 @@
 import React from "react";
+import PromiseState from "@stein197/util/PromiseState";
 import Spinner from "@stein197/react-ui/Spinner";
 import {Switch, Case} from "@stein197/react-ui/Switch";
 import Finder from "app/view/Finder";
@@ -12,7 +13,7 @@ export default class App extends React.Component<Props, State> {
 	public constructor(props: Props) {
 		super(props);
 		this.state = {
-			state: "pending"
+			state: PromiseState.Pending
 		};
 	}
 
@@ -29,7 +30,7 @@ export default class App extends React.Component<Props, State> {
 		return (
 			<ApplicationContext.Provider value={this.props.application}>
 				<Switch value={this.state.state}>
-					<Case value="pending">
+					<Case value={PromiseState.Pending}>
 						<section className="h-full d-flex align-items-center">
 							<div className="container text-center">
 								<Spinner r="50" strokeColor="lightblue" strokeWidth="5" duration=".5" />
@@ -37,14 +38,14 @@ export default class App extends React.Component<Props, State> {
 							</div>
 						</section>
 					</Case>
-					<Case value="loaded">
+					<Case value={PromiseState.Fulfilled}>
 						<section className="h-full">
 							<div className="h-100 container d-flex flex-column flex-nowrap">
 								<Finder data={this.props.application.emoji!} />
 							</div>
 						</section>
 					</Case>
-					<Case value="error">
+					<Case value={PromiseState.Rejected}>
 						<section className="h-full d-flex align-items-center">
 							<div className="container text-center">
 								<p className="alert alert-danger m-0">{this.state.errorMessage}</p>
@@ -58,7 +59,7 @@ export default class App extends React.Component<Props, State> {
 
 	private onApplicationLoad = (error?: Error) => {
 		this.setState({
-			state: error ? "error" : "loaded",
+			state: error ? PromiseState.Rejected : PromiseState.Fulfilled,
 			errorMessage: error?.message
 		});
 	}
@@ -69,6 +70,6 @@ type Props = {
 }
 
 type State = {
-	state: "pending" | "loaded" | "error";
+	state: PromiseState;
 	errorMessage?: string;
 }
