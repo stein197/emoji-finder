@@ -1,6 +1,6 @@
 {
 	"log": true,
-	"pagination": 100,
+	"pagination": 60,
 	"url": {
 		"emoji": "emoji.json"
 	}
