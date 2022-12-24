@@ -16,25 +16,24 @@ export default class Finder extends React.Component<Props, State> {
 
 	public static readonly contextType: React.Context<Application> = context.get();
 
-	private inputRef: React.RefObject<HTMLInputElement> = React.createRef();
-
 	public constructor(props: Props) {
 		super(props);
 		this.state = {
 			state: PromiseState.Pending,
+			value: "",
 			data: [],
 			amount: 0
 		};
 	}
 
 	public override componentDidMount(): void {
-		this.update();
+		this.update(this.state.value);
 	}
 
 	public override render(): React.ReactNode {
 		return (
 			<>
-				<input ref={this.inputRef} type="text" className="form-control py-2 w-100 fs-2 my-3" placeholder="Find an Emoji" onInput={this.onInput} />
+				<input className="form-control py-2 w-100 fs-2 my-3" value={this.state.value} type="text" placeholder="Find an Emoji" onChange={this.onInputChange} />
 				<Switch value={this.state.state}>
 					<Case value={PromiseState.Pending}>
 						<div className="flex-grow-1 d-flex align-items-center justify-content-center">
@@ -43,7 +42,7 @@ export default class Finder extends React.Component<Props, State> {
 					</Case>
 					<Case value={PromiseState.Fulfilled}>
 						<div className="flex-grow-1 overflow-y-scroll overflow-x-hidden">
-							<EmojiList data={this.state.data} />
+							<EmojiList data={this.state.data} onTagClick={this.onTagClick} />
 						</div>
 						<div className="text-center py-3">
 							<button className="btn btn-dark" onClick={this.onLoadClick}>Load more</button>
@@ -59,15 +58,15 @@ export default class Finder extends React.Component<Props, State> {
 		);
 	}
 
-	private async update(): Promise<void> {
+	private async update(query: string): Promise<void> {
 		this.setState({
 			state: PromiseState.Pending,
+			value: query,
 			error: undefined
 		});
 		try {
 			const amount = this.context.container.get(Config)!.data!.pagination;
 			const searcher = this.context.container.get(EmojiSearcher)!;
-			const query = this.inputRef.current!.value;
 			const data = await searcher.search(query, amount);
 			this.setState({
 				state: PromiseState.Fulfilled,
@@ -82,11 +81,17 @@ export default class Finder extends React.Component<Props, State> {
 		}
 	}
 
-	private onInput = (): void => void this.update();
+	private readonly onInputChange = (e: React.SyntheticEvent<HTMLInputElement, Event>): void => {
+		const target = e.target as HTMLInputElement;
+		const value = target.value;
+		this.update(value);
+	}
 
-	private onLoadClick = (): void => {
-		const amountStep = this.context.container.get(Config)!.data!.pagination;
+	// TODO
+	private readonly onLoadClick = (): void => {}
 
+	private readonly onTagClick = (tag: string): void => {
+		this.update(tag);
 	}
 }
 
@@ -94,6 +99,7 @@ type Props = {}
 
 type State = {
 	state: PromiseState;
+	value: string;
 	data: Emoji[];
 	amount: number;
 	error?: Error;
