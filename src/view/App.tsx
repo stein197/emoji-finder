@@ -2,6 +2,7 @@ import React from "react";
 import PromiseState from "@stein197/util/PromiseState";
 import Spinner from "@stein197/react-ui/Spinner";
 import {Switch, Case} from "@stein197/react-ui/Switch";
+import ErrorAlert from "app/view/ErrorAlert";
 import Finder from "app/view/Finder";
 import * as context from "app/view/context";
 import type Application from "app/Application";
@@ -48,7 +49,7 @@ export default class App extends React.Component<Props, State> {
 					<Case value={PromiseState.Rejected}>
 						<section className="h-full d-flex align-items-center">
 							<div className="container text-center">
-								<p className="alert alert-danger m-0">{this.state.errorMessage}</p>
+								<ErrorAlert error={this.state.error!} />
 							</div>
 						</section>
 					</Case>
@@ -60,7 +61,7 @@ export default class App extends React.Component<Props, State> {
 	private onApplicationLoad = (error?: Error) => {
 		this.setState({
 			state: error ? PromiseState.Rejected : PromiseState.Fulfilled,
-			errorMessage: error?.message
+			error
 		});
 	}
 }
@@ -71,5 +72,5 @@ type Props = {
 
 type State = {
 	state: PromiseState;
-	errorMessage?: string;
+	error?: Error;
 }
