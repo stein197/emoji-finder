@@ -12,7 +12,7 @@ export default class EmojiList extends React.Component<Props> {
 
 	public override render(): React.ReactNode {
 		return (
-			<div className="row gx-3 gy-3">
+			<div className="row g-3">
 				<Foreach data={this.props.data}>
 					{emoji => (
 						<div key={emoji.codes.join("-")} className="col col-6 col-md-4 col-lg-3 col-xl-2">
