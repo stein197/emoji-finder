@@ -16,18 +16,22 @@ export default class Finder extends React.Component<Props, State> {
 
 	public static readonly contextType: React.Context<Application> = context.get();
 
+	private get config(): Exclude<typeof Config.prototype.data, null> {
+		return this.context.container.get(Config)!.data!;
+	}
+
 	public constructor(props: Props) {
 		super(props);
 		this.state = {
+			data: [],
 			state: PromiseState.Pending,
 			value: "",
-			data: [],
 			amount: 0
 		};
 	}
 
 	public override componentDidMount(): void {
-		this.update(this.state.value);
+		this.update(this.state.value, this.config.pagination);
 	}
 
 	public override render(): React.ReactNode {
@@ -58,24 +62,25 @@ export default class Finder extends React.Component<Props, State> {
 		);
 	}
 
-	private async update(query: string): Promise<void> {
+	private async update(query: string, amount: number): Promise<void> {
 		this.setState({
 			state: PromiseState.Pending,
 			value: query,
 			error: undefined
 		});
 		try {
-			const amount = this.context.container.get(Config)!.data!.pagination;
 			const searcher = this.context.container.get(EmojiSearcher)!;
 			const data = await searcher.search(query, amount);
 			this.setState({
-				state: PromiseState.Fulfilled,
 				data,
+				state: PromiseState.Fulfilled,
 				amount
 			});
 		} catch (e) {
 			this.setState({
+				data: [],
 				state: PromiseState.Rejected,
+				amount: this.config.pagination,
 				error: e as Error
 			});
 		}
@@ -84,23 +89,24 @@ export default class Finder extends React.Component<Props, State> {
 	private readonly onInputChange = (e: React.SyntheticEvent<HTMLInputElement, Event>): void => {
 		const target = e.target as HTMLInputElement;
 		const value = target.value;
-		this.update(value);
+		this.update(value, this.config.pagination);
 	}
 
-	// TODO
-	private readonly onLoadClick = (): void => {}
+	private readonly onLoadClick = (): void => {
+		this.update(this.state.value, this.state.amount + this.config.pagination);
+	}
 
 	private readonly onTagClick = (tag: string): void => {
-		this.update(tag);
+		this.update(tag, this.config.pagination);
 	}
 }
 
 type Props = {}
 
 type State = {
+	data: Emoji[];
 	state: PromiseState;
 	value: string;
-	data: Emoji[];
 	amount: number;
 	error?: Error;
 }
