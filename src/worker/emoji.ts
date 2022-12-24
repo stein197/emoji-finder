@@ -19,7 +19,7 @@ async function onMessage(request: EmojiWorkerRequest): Promise<EmojiWorkerRespon
 	try {
 		await tryLoad();
 		return {
-			data: util.searchEmoji(request.q, data)
+			data: util.searchEmoji(request.query, data)
 		};
 	} catch (err) {
 		return {

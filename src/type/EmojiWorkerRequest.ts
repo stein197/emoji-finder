@@ -1,3 +1,3 @@
 export type EmojiWorkerRequest = {
-	q: string;
+	query: string;
 }
