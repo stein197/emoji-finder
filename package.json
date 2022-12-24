@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/stein197/emoji-finder#readme",
   "devDependencies": {
+    "@stein197/ts-util": "1.10.0",
     "@types/node": "18.11.10",
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.9",

@@ -1,8 +1,9 @@
+import type {ObjectMap} from "@stein197/ts-util";
 import type {WorkerMessage} from "app/type/WorkerMessage";
 
 export default class SyncWorker<T, U> {
 
-	private readonly __postResolveCallbackMap: {[ID in number]: (response: U) => void} = {};
+	private readonly __postResolveCallbackMap: ObjectMap<(response: U) => void> = {};
 	private readonly __worker: Worker;
 	private __id: number = 0;
 
