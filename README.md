@@ -12,6 +12,7 @@ Then open `index.html` in a browser.
 - `src/` - TypeScript source code
 	- `error/` - Error classes
 	- `type/` - TypeScript types
+		- `event/` - Event maps
 	- `view/` - React components
 	- `worker/` - Web workers
 - `config.json` - The main app configuration file

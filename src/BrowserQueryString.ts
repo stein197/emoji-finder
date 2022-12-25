@@ -2,7 +2,7 @@ import {EventDispatcher, EventEmitter} from "@stein197/observer";
 import * as qs from "@stein197/qs";
 import * as object from "@stein197/util/object";
 import type {BrowserQueryStringMap} from "app/type/BrowserQueryStringMap";
-import type {BrowserQueryStringEventMap} from "app/type/BrowserQueryStringEventMap";
+import type {BrowserQueryStringEventMap} from "app/type/event/BrowserQueryStringEventMap";
 
 export default class BrowserQueryString implements EventEmitter<BrowserQueryStringEventMap> {
 

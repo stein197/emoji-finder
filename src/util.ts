@@ -1,5 +1,5 @@
-import * as object from "@stein197/util/object";
 import ResponseError from "app/error/ResponseError";
+import * as object from "@stein197/util/object";
 import type {Emoji} from "app/type/Emoji";
 
 export const URL_CONFIG: string = "/config.json";

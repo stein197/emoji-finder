@@ -1,9 +1,9 @@
 import React from "react";
 import PromiseState from "@stein197/util/PromiseState";
 import Spinner from "@stein197/react-ui/Spinner";
-import {Switch, Case} from "@stein197/react-ui/Switch";
 import ErrorAlert from "app/view/ErrorAlert";
 import Finder from "app/view/Finder";
+import {Switch, Case} from "@stein197/react-ui/Switch";
 import * as context from "app/view/context";
 import type Application from "app/Application";
 

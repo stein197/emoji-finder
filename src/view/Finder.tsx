@@ -5,12 +5,12 @@ import Config from "app/Config";
 import EmojiList from "app/view/EmojiList";
 import EmojiSearcher from "app/EmojiSearcher";
 import ErrorAlert from "app/view/ErrorAlert";
+import BrowserQueryString from "app/BrowserQueryString";
 import {Switch, Case} from "@stein197/react-ui/Switch";
 import * as context from "app/view/context"
 import type Application from "app/Application";
 import type {Emoji} from "app/type/Emoji";
-import BrowserQueryString from "app/BrowserQueryString";
-import type { BrowserQueryStringMap } from "app/type/BrowserQueryStringMap";
+import type {BrowserQueryStringMap} from "app/type/BrowserQueryStringMap";
 
 export default class Finder extends React.Component<Props, State> {
 

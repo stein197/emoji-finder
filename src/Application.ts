@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOMClient from "react-dom/client";
-import {EventDispatcher} from "@stein197/observer";
 import App from "app/view/App";
 import Config from "app/Config";
 import Container from "app/Container";
 import EmojiSearcher from "app/EmojiSearcher";
 import BrowserQueryString from "app/BrowserQueryString";
+import {EventDispatcher} from "@stein197/observer";
 import * as util from "app/util";
 import * as context from "app/view/context";
 import type {EventEmitter} from "@stein197/observer";
-import type {ApplicationEventMap} from "app/type/ApplicationEventMap";
+import type {ApplicationEventMap} from "app/type/event/ApplicationEventMap";
 
 export default class Application implements EventEmitter<ApplicationEventMap> {
 

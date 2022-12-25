@@ -1,10 +1,10 @@
 import React from "react";
 import Foreach from "@stein197/react-ui/Foreach";
 import TooltipButton from "app/view/TooltipButton";
+import BrowserQueryString from "app/BrowserQueryString";
 import * as context from "app/view/context";
 import type Application from "app/Application";
 import type {Emoji} from "app/type/Emoji";
-import BrowserQueryString from "app/BrowserQueryString";
 
 export default class EmojiListItem extends React.Component<Props> {
 
