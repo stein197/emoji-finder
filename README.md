@@ -1,11 +1,14 @@
 # Emoji Finder
+Simple emoji finder app
+![](asset/finder.png)
 
 ## Building
 ```
 npm install
+npm run server
 npm run build
 ```
-Then open `index.html` in a browser.
+Then open `localhost:80` in a browser.
 
 ## Directory structure
 - `cli/` - Node.js scripts
