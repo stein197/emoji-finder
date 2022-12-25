@@ -1,9 +1,15 @@
 import React from "react";
 import Overlay from "react-bootstrap/Overlay";
 import Tooltip from "react-bootstrap/Tooltip";
+import * as context from "app/view/context";
+import type Application from "app/Application";
 import type {Placement} from "react-bootstrap/esm/types";
 
 export default class TooltipButton extends React.Component<Props, State> {
+
+	declare context: React.ContextType<React.Context<Application>>;
+
+	public static readonly contextType: React.Context<Application> = context.get();
 
 	public static readonly defaultProps = {
 		placement: "top"
@@ -44,11 +50,11 @@ export default class TooltipButton extends React.Component<Props, State> {
 	}
 
 	private readonly onClick = (e: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
-		window.clearTimeout(this.appearTimeout);
+		this.context.global.clearTimeout(this.appearTimeout);
 		this.setState({
 			tooltip: true
 		});
-		this.appearTimeout = window.setTimeout(() => this.setState({
+		this.appearTimeout = this.context.global.setTimeout(() => this.setState({
 			tooltip: false
 		}), TooltipButton.TIMEOUT_HIDE);
 		this.props.onClick?.(e);
