@@ -6,6 +6,7 @@ import EmojiList from "app/view/EmojiList";
 import EmojiSearcher from "app/EmojiSearcher";
 import ErrorAlert from "app/view/ErrorAlert";
 import BrowserQueryString from "app/BrowserQueryString";
+import ButtonGroup from "app/view/ButtonGroup";
 import {Switch, Case} from "@stein197/react-ui/Switch";
 import * as context from "app/view/context"
 import type Application from "app/Application";
@@ -14,9 +15,15 @@ import type {BrowserQueryStringMap} from "app/type/BrowserQueryStringMap";
 
 export default class Finder extends React.Component<Props, State> {
 
-	declare context: React.ContextType<React.Context<Application>>;
-
 	public static readonly contextType: React.Context<Application> = context.get();
+
+	public static readonly VARIATION_DEFAULT: string = "Default";
+
+	private static readonly VARIATIONS: string[] = [
+		this.VARIATION_DEFAULT, "Apple", "Google", "Facebook", "Windows", "Twitter", "JoyPixels", "Samsung", "GMail", "Softbank", "DCM", "KDDI"
+	];
+
+	declare private context: React.ContextType<React.Context<Application>>;
 
 	private get config(): Exclude<typeof Config.prototype.data, null> {
 		return this.context.container.get(Config)!.data!;
@@ -28,7 +35,8 @@ export default class Finder extends React.Component<Props, State> {
 			data: [],
 			state: PromiseState.Pending,
 			value: "",
-			amount: 0
+			amount: 0,
+			variation: Finder.VARIATION_DEFAULT
 		};
 	}
 
@@ -45,6 +53,7 @@ export default class Finder extends React.Component<Props, State> {
 		return (
 			<>
 				<input className="form-control py-2 w-100 fs-2 my-3" value={this.state.value} type="text" placeholder="Find an Emoji" onChange={this.onInputChange} />
+				<ButtonGroup data={Finder.VARIATIONS} className="mb-3" btnClassName="btn-dark" onChange={this.onButtonGroupChange} />
 				<Switch value={this.state.state}>
 					<Case value={PromiseState.Pending}>
 						<div className="flex-grow-1 d-flex align-items-center justify-content-center">
@@ -53,7 +62,7 @@ export default class Finder extends React.Component<Props, State> {
 					</Case>
 					<Case value={PromiseState.Fulfilled}>
 						<div className="flex-grow-1 overflow-y-scroll overflow-x-hidden">
-							<EmojiList data={this.state.data} />
+							<EmojiList data={this.state.data} variation={this.state.variation} />
 						</div>
 						<div className="text-center py-3">
 							<button className="btn btn-dark" onClick={this.onLoadClick}>Load more</button>
@@ -106,6 +115,12 @@ export default class Finder extends React.Component<Props, State> {
 	private readonly onQueryStringChange = (query: BrowserQueryStringMap): void => {
 		this.update(query?.query ?? "", this.config.pagination);
 	}
+
+	private readonly onButtonGroupChange = (button: string): void => {
+		this.setState({
+			variation: button
+		});
+	}
 }
 
 type Props = {}
@@ -115,5 +130,6 @@ type State = {
 	state: PromiseState;
 	value: string;
 	amount: number;
+	variation: string;
 	error?: Error;
 }

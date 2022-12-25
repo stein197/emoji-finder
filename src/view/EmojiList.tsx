@@ -16,7 +16,7 @@ export default class EmojiList extends React.Component<Props> {
 				<Foreach data={this.props.data}>
 					{emoji => (
 						<div key={emoji.codes.join("-")} className="col col-6 col-md-4 col-lg-3 col-xl-2">
-							<EmojiListItem data={emoji} />
+							<EmojiListItem data={emoji} variation={this.props.variation} />
 						</div>
 					)}
 				</Foreach>
@@ -27,5 +27,6 @@ export default class EmojiList extends React.Component<Props> {
 
 type Props = {
 	data: Emoji[];
+	variation?: string;
 	className?: string;
 }
