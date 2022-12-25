@@ -30,7 +30,7 @@ export default class Application implements EventEmitter<ApplicationEventMap> {
 	}
 
 	public addEventListener<K extends keyof ApplicationEventMap>(key: K, listener: ApplicationEventMap[K]): void {
-		if (key === "Load" && this.__loaded)
+		if (key === "load" && this.__loaded)
 			listener(this.__loadResult);
 		else
 			this.__dispatcher.addEventListener(key, listener);
@@ -41,7 +41,7 @@ export default class Application implements EventEmitter<ApplicationEventMap> {
 	}
 
 	public onceEventListener<K extends keyof ApplicationEventMap>(key: K, listener: ApplicationEventMap[K]): void {
-		if (key === "Load" && this.__loaded)
+		if (key === "load" && this.__loaded)
 			listener(this.__loadResult);
 		else
 			this.__dispatcher.onceEventListener(key, listener);
@@ -60,10 +60,10 @@ export default class Application implements EventEmitter<ApplicationEventMap> {
 		try {
 			await this.__container.register(new Config(util.URL_CONFIG));
 			await this.__container.register(new EmojiSearcher(util.URL_WORKER_EMOJI));
-			this.__dispatcher.dispatch("Load");
+			this.__dispatcher.dispatch("load");
 		} catch (e) {
 			this.__loadResult = e as Error;
-			this.__dispatcher.dispatch("Load", this.__loadResult);
+			this.__dispatcher.dispatch("load", this.__loadResult);
 		}
 		this.__loaded = true;
 	}

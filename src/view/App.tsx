@@ -19,11 +19,11 @@ export default class App extends React.Component<Props, State> {
 	}
 
 	public override componentDidMount(): void {
-		this.props.application.addEventListener("Load", this.onApplicationLoad);
+		this.props.application.addEventListener("load", this.onApplicationLoad);
 	}
 
 	public override componentWillUnmount(): void {
-		this.props.application.removeEventListener("Load", this.onApplicationLoad);
+		this.props.application.removeEventListener("load", this.onApplicationLoad);
 	}
 
 	public override render(): React.ReactNode {
