@@ -2,9 +2,8 @@ import SyncWorker from "app/SyncWorker";
 import type {Emoji} from "app/type/Emoji";
 import type {EmojiWorkerRequest} from "app/type/EmojiWorkerRequest";
 import type {EmojiWorkerResponse} from "app/type/EmojiWorkerResponse";
-import type {Loadable} from "app/type/Loadable";
 
-export default class EmojiSearcher implements Loadable {
+export default class EmojiSearcher {
 
 	private readonly __worker: SyncWorker<EmojiWorkerRequest, EmojiWorkerResponse>;
 
@@ -17,9 +16,5 @@ export default class EmojiSearcher implements Loadable {
 		if ("data" in result)
 			return result.data;
 		throw new Error(result.error.message);
-	}
-
-	public load(): Promise<void> {
-		return Promise.resolve();
 	}
 }

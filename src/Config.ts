@@ -1,8 +1,7 @@
 import * as object from "@stein197/util/object";
 import * as util from "app/util";
-import type {Loadable} from "app/type/Loadable";
 
-export default class Config implements Loadable {
+export default class Config {
 
 	private __loaded: boolean = false;
 	private __data: typeof import("../config.json") | null = null;

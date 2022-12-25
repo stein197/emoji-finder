@@ -9,6 +9,8 @@ import {Switch, Case} from "@stein197/react-ui/Switch";
 import * as context from "app/view/context"
 import type Application from "app/Application";
 import type {Emoji} from "app/type/Emoji";
+import BrowserQueryString from "app/BrowserQueryString";
+import type { BrowserQueryStringMap } from "app/type/BrowserQueryStringMap";
 
 export default class Finder extends React.Component<Props, State> {
 
@@ -32,6 +34,11 @@ export default class Finder extends React.Component<Props, State> {
 
 	public override componentDidMount(): void {
 		this.update(this.state.value, this.config.pagination);
+		this.context.container.get(BrowserQueryString)!.addEventListener("change", this.onQueryStringChange);
+	}
+
+	public override componentWillUnmount(): void {
+		this.context.container.get(BrowserQueryString)!.removeEventListener("change", this.onQueryStringChange);
 	}
 
 	public override render(): React.ReactNode {
@@ -46,7 +53,7 @@ export default class Finder extends React.Component<Props, State> {
 					</Case>
 					<Case value={PromiseState.Fulfilled}>
 						<div className="flex-grow-1 overflow-y-scroll overflow-x-hidden">
-							<EmojiList data={this.state.data} onTagClick={this.onTagClick} />
+							<EmojiList data={this.state.data} />
 						</div>
 						<div className="text-center py-3">
 							<button className="btn btn-dark" onClick={this.onLoadClick}>Load more</button>
@@ -96,8 +103,8 @@ export default class Finder extends React.Component<Props, State> {
 		this.update(this.state.value, this.state.amount + this.config.pagination);
 	}
 
-	private readonly onTagClick = (tag: string): void => {
-		this.update(tag, this.config.pagination);
+	private readonly onQueryStringChange = (query: BrowserQueryStringMap): void => {
+		this.update(query?.query ?? "", this.config.pagination);
 	}
 }
 

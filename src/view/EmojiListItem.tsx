@@ -1,9 +1,16 @@
 import React from "react";
-import TooltipButton from "app/view/TooltipButton";
-import type {Emoji} from "app/type/Emoji";
 import Foreach from "@stein197/react-ui/Foreach";
+import TooltipButton from "app/view/TooltipButton";
+import * as context from "app/view/context";
+import type Application from "app/Application";
+import type {Emoji} from "app/type/Emoji";
+import BrowserQueryString from "app/BrowserQueryString";
 
 export default class EmojiListItem extends React.Component<Props> {
+
+	declare context: React.ContextType<React.Context<Application>>;
+
+	public static readonly contextType: React.Context<Application> = context.get();
 
 	public override render(): React.ReactNode {
 		return (
@@ -28,19 +35,20 @@ export default class EmojiListItem extends React.Component<Props> {
 	}
 
 	private readonly onClick = async () => {
-		await window.navigator.clipboard.writeText(this.props.data.codes.map(code => String.fromCodePoint(code)).join(""));
+		await this.context.global.navigator.clipboard.writeText(this.props.data.codes.map(code => String.fromCodePoint(code)).join(""));
 	}
 
 	private readonly onTagClick = (e: React.SyntheticEvent<HTMLAnchorElement, MouseEvent>): void => {
 		const target = e.target as HTMLAnchorElement;
 		const tag = target.getAttribute("data-tag");
-		if (!tag || !this.props.onTagClick)
+		if (!tag)
 			return;
-		this.props.onTagClick(tag);
+		this.context.container.get(BrowserQueryString)!.set({
+			query: tag
+		});
 	}
 }
 
 type Props = {
 	data: Emoji;
-	onTagClick?(tag: string): void;
 }

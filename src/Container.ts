@@ -1,21 +1,19 @@
-import type {Loadable} from "app/type/Loadable";
 import type {Constructor} from "app/type/Constructor";
 
-export default class Container<T extends Loadable[]> {
+export default class Container<T extends any[]> {
 
-	private readonly __data: Loadable[] = [];
+	private readonly __data: any[] = [];
 
 	public constructor() {}
 
 	public get<U extends T[number]>(type: Constructor<U>): U | null {
-		for (const loadable of this.__data)
-			if (loadable instanceof type)
-				return loadable;
+		for (const object of this.__data)
+			if (object instanceof type)
+				return object;
 		return null;
 	}
 
-	public async register<U extends T[number]>(loadable: U): Promise<void> {
-		this.__data.push(loadable);
-		await loadable.load();
+	public add<U extends T[number]>(object: U): void {
+		this.__data.push(object);
 	}
 }

@@ -7,7 +7,7 @@ export default (...[, argv]) => ({
 	entry: {
 		index: path.resolve(__dirname, "index.ts"),
 		...Object.fromEntries(fs.readdirSync(path.resolve(__dirname, "src/worker")).map(fileName => [
-			`worker/${file.getBase(fileName)}`,
+			`worker/${file.base(fileName)}`,
 			path.resolve(__dirname, "src/worker", fileName)
 		]))
 	},
