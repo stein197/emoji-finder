@@ -41,7 +41,9 @@ export default class Finder extends React.Component<Props, State> {
 	}
 
 	public override componentDidMount(): void {
-		this.update(this.state.value, this.config.pagination);
+		const value = this.context.container.get(BrowserQueryString)!.data.query ?? ""
+		this.setState({value});
+		this.update(value, this.config.pagination);
 		this.context.container.get(BrowserQueryString)!.addEventListener("change", this.onQueryStringChange);
 	}
 
@@ -105,6 +107,9 @@ export default class Finder extends React.Component<Props, State> {
 	private readonly onInputChange = (e: React.SyntheticEvent<HTMLInputElement, Event>): void => {
 		const target = e.target as HTMLInputElement;
 		const value = target.value;
+		this.context.container.get(BrowserQueryString)!.set({
+			query: value
+		});
 		this.update(value, this.config.pagination);
 	}
 
