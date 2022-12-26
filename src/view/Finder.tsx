@@ -85,6 +85,8 @@ export default class Finder extends React.Component<Props, State> {
 	}
 
 	private async update(query: string, amount: number): Promise<void> {
+		// if (this.state.value === query)
+		// 	return;
 		this.setState({
 			state: PromiseState.Pending,
 			value: query,

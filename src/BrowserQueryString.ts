@@ -3,27 +3,29 @@ import * as qs from "@stein197/qs";
 import * as object from "@stein197/util/object";
 import type {BrowserQueryStringMap} from "app/type/BrowserQueryStringMap";
 import type {BrowserQueryStringEventMap} from "app/type/event/BrowserQueryStringEventMap";
+import type {BrowserQueryStringContext} from "app/type/BrowserQueryStringContext";
 
 export default class BrowserQueryString<T> implements EventEmitter<BrowserQueryStringEventMap<T>> {
 
 	private readonly __dispatcher: EventDispatcher<BrowserQueryStringEventMap<T>> = new EventDispatcher();
 
 	public get data(): BrowserQueryStringMap {
-		return qs.parse(this.__location.search.replace(/^\?/, ""), {
+		return qs.parse(this.__context.location.search.replace(/^\?/, ""), {
 			scalars: false
 		}) as BrowserQueryStringMap;
 	}
 
-	public constructor(private readonly __history: History, private readonly __location: Location) {}
+	public constructor(private readonly __context: BrowserQueryStringContext) {}
 
 	public set(query: Partial<T>, merge: boolean = true): void {
 		const prevQuery = this.data;
 		const newQuery = merge ? object.deepMerge(prevQuery, query) : query;
 		const strQuery = qs.stringify(newQuery);
-		const newUrl = this.__location.protocol + "//" + this.__location.host + this.__location.pathname + (strQuery ? ("?" + qs.stringify(newQuery)) : "");
+		const location = this.__context.location;
+		const newUrl = location.protocol + "//" + location.host + location.pathname + (strQuery ? ("?" + qs.stringify(newQuery)) : "");
 		if (object.strictlyEqual(prevQuery, newQuery))
 			return;
-		this.__history.pushState({
+		this.__context.history.pushState({
 			path: newUrl
 		}, "", newUrl);
 		this.__dispatcher.dispatch("change", newQuery);

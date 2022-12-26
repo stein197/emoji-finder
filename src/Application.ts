@@ -61,7 +61,7 @@ export default class Application implements EventEmitter<ApplicationEventMap> {
 			await config.load();
 			this.container.add(config);
 			this.container.add(new EmojiSearcher(util.URL_WORKER_EMOJI));
-			this.container.add(new BrowserQueryString(this.global.history, this.global.location));
+			this.container.add(new BrowserQueryString(this.global));
 			this.__dispatcher.dispatch("load");
 		} catch (e) {
 			this.__loadResult = e as Error;

@@ -6,10 +6,10 @@ import BrowserQueryString from "app/BrowserQueryString";
 describe("BrowserQueryString", () => {
 	let bqs: BrowserQueryString<{a: string, b: string, c: string}>;
 	beforeEach(() => {
-		const domWindow = new jsdom.JSDOM("", {
+		const dom = new jsdom.JSDOM("", {
 			url: "https://localhost"
-		}).window;
-		bqs = new BrowserQueryString(domWindow.history, domWindow.location);
+		});
+		bqs = new BrowserQueryString(dom.window);
 	});
 	describe("BrowserQueryString.set()", () => {
 		it("Should fire an event when query string changes", () => {
