@@ -5,6 +5,7 @@ Simple emoji finder app
 ## Building
 ```
 npm install
+npm run make:emoji
 npm run server
 npm run build
 ```
