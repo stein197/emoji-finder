@@ -20,11 +20,11 @@ export default class BrowserQueryString<T> implements EventEmitter<BrowserQueryS
 	public set(query: Partial<T>, merge: boolean = true): void {
 		const prevQuery = this.data;
 		const newQuery = merge ? object.deepMerge(prevQuery, query) : query;
+		if (object.strictlyEqual(prevQuery, newQuery))
+			return;
 		const strQuery = qs.stringify(newQuery);
 		const location = this.__context.location;
 		const newUrl = location.protocol + "//" + location.host + location.pathname + (strQuery ? ("?" + qs.stringify(newQuery)) : "");
-		if (object.strictlyEqual(prevQuery, newQuery))
-			return;
 		this.__context.history.pushState({
 			path: newUrl
 		}, "", newUrl);
