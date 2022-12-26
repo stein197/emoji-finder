@@ -7,7 +7,7 @@ describe("BrowserQueryString", () => {
 	let bqs: BrowserQueryString<{a: string, b: string, c: string}>;
 	beforeEach(() => {
 		const domWindow = new jsdom.JSDOM("", {
-			url: "localhost"
+			url: "https://localhost"
 		}).window;
 		bqs = new BrowserQueryString(domWindow.history, domWindow.location);
 	});
