@@ -18,8 +18,10 @@ let data: Emoji[] = [];
 async function onMessage(request: EmojiWorkerRequest): Promise<EmojiWorkerResponse> {
 	try {
 		await tryLoad();
+		const result = util.searchEmoji(request.query, data);
 		return {
-			data: util.searchEmoji(request.query, data).slice(0, request.amount)
+			data: result.slice(0, request.amount),
+			next: request.amount < result.length
 		};
 	} catch (err) {
 		return {

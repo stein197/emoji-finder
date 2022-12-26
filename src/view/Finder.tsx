@@ -7,6 +7,7 @@ import EmojiSearcher from "app/EmojiSearcher";
 import ErrorAlert from "app/view/ErrorAlert";
 import BrowserQueryString from "app/BrowserQueryString";
 import ButtonGroup from "app/view/ButtonGroup";
+import {If} from "@stein197/react-ui/If";
 import {Switch, Case} from "@stein197/react-ui/Switch";
 import * as context from "app/view/context"
 import type Application from "app/Application";
@@ -36,7 +37,8 @@ export default class Finder extends React.Component<Props, State> {
 			state: PromiseState.Pending,
 			value: "",
 			amount: 0,
-			variation: Finder.VARIATION_DEFAULT
+			variation: Finder.VARIATION_DEFAULT,
+			next: true
 		};
 	}
 
@@ -65,9 +67,11 @@ export default class Finder extends React.Component<Props, State> {
 					<Case value={PromiseState.Fulfilled}>
 						<div className="flex-grow-1 overflow-y-scroll overflow-x-hidden">
 							<EmojiList data={this.state.data} variation={this.state.variation} />
-						</div>
-						<div className="text-center py-3">
-							<button className="btn btn-dark" onClick={this.onLoadClick}>Load more</button>
+							<If value={this.state.next}>
+								<div className="text-center py-3">
+									<button className="btn btn-dark" onClick={this.onLoadClick}>Load more</button>
+								</div>
+							</If>
 						</div>
 					</Case>
 					<Case value={PromiseState.Rejected}>
@@ -90,15 +94,17 @@ export default class Finder extends React.Component<Props, State> {
 			const searcher = this.context.container.get(EmojiSearcher)!;
 			const data = await searcher.search(query, amount);
 			this.setState({
-				data,
+				data: data.data,
 				state: PromiseState.Fulfilled,
-				amount
+				amount,
+				next: data.next
 			});
 		} catch (e) {
 			this.setState({
 				data: [],
 				state: PromiseState.Rejected,
 				amount: this.config.pagination,
+				next: false,
 				error: e as Error
 			});
 		}
@@ -136,5 +142,6 @@ type State = {
 	value: string;
 	amount: number;
 	variation: string;
+	next: boolean;
 	error?: Error;
 }

@@ -1,7 +1,6 @@
 import SyncWorker from "app/SyncWorker";
-import type {Emoji} from "app/type/Emoji";
 import type {EmojiWorkerRequest} from "app/type/EmojiWorkerRequest";
-import type {EmojiWorkerResponse} from "app/type/EmojiWorkerResponse";
+import type {EmojiWorkerResponse, EmojiWorkerSuccessResponse} from "app/type/EmojiWorkerResponse";
 
 export default class EmojiSearcher {
 
@@ -11,10 +10,10 @@ export default class EmojiSearcher {
 		this.__worker = new SyncWorker(workerURL);
 	}
 
-	public async search(query: string, amount: number): Promise<Emoji[]> {
+	public async search(query: string, amount: number): Promise<EmojiWorkerSuccessResponse> {
 		const result = await this.__worker.post({query, amount});
 		if ("data" in result)
-			return result.data;
+			return result;
 		throw new Error(result.error.message);
 	}
 }

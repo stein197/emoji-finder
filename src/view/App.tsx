@@ -7,6 +7,9 @@ import {Switch, Case} from "@stein197/react-ui/Switch";
 import * as context from "app/view/context";
 import type Application from "app/Application";
 
+/**
+ * Root React component.
+ */
 export default class App extends React.Component<Props, State> {
 
 	public static readonly contextType: React.Context<Application> = context.get();
