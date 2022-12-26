@@ -23,7 +23,7 @@ export default class Finder extends React.Component<Props, State> {
 		this.VARIATION_DEFAULT, "Apple", "Google", "Facebook", "Windows", "Twitter", "JoyPixels", "Samsung", "GMail", "Softbank", "DCM", "KDDI"
 	];
 
-	declare private context: React.ContextType<React.Context<Application>>;
+	declare public context: React.ContextType<React.Context<Application>>;
 
 	private get config(): Exclude<typeof Config.prototype.data, null> {
 		return this.context.container.get(Config)!.data!;

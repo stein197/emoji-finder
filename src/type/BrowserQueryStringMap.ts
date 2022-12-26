@@ -1,3 +1,3 @@
-export type BrowserQueryStringMap = Partial<{
+export type BrowserQueryStringMap = {
 	query: string;
-}>;
+}

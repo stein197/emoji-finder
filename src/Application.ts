@@ -10,10 +10,11 @@ import * as util from "app/util";
 import * as context from "app/view/context";
 import type {EventEmitter} from "@stein197/observer";
 import type {ApplicationEventMap} from "app/type/event/ApplicationEventMap";
+import type { BrowserQueryStringMap } from "./type/BrowserQueryStringMap";
 
 export default class Application implements EventEmitter<ApplicationEventMap> {
 
-	public readonly container: Container<[Config, EmojiSearcher, BrowserQueryString]> = new Container();
+	public readonly container: Container<[Config, EmojiSearcher, BrowserQueryString<BrowserQueryStringMap>]> = new Container();
 
 	private readonly __dispatcher: EventDispatcher<ApplicationEventMap> = new EventDispatcher();
 	private __loaded: boolean = false;
