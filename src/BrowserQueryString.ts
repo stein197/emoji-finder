@@ -9,7 +9,9 @@ export default class BrowserQueryString<T> implements EventEmitter<BrowserQueryS
 	private readonly __dispatcher: EventDispatcher<BrowserQueryStringEventMap<T>> = new EventDispatcher();
 
 	public get data(): BrowserQueryStringMap {
-		return qs.parse(this.__location.search.replace(/^\?/, "")) as BrowserQueryStringMap;
+		return qs.parse(this.__location.search.replace(/^\?/, ""), {
+			scalars: false
+		}) as BrowserQueryStringMap;
 	}
 
 	public constructor(private readonly __history: History, private readonly __location: Location) {}

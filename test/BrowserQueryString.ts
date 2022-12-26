@@ -30,14 +30,14 @@ describe("BrowserQueryString", () => {
 			bqs.set({a: "1"})
 			bqs.addEventListener("change", q => query = q);
 			bqs.set({b: "2", c: "3"}, true);
-			assert.equal(query, {a: "1", b: "2", c: "3"});
+			assert.deepStrictEqual(query, {a: "1", b: "2", c: "3"});
 		});
 		it("Should pass correct query string object to listeners when \"merge\" === false", () => {
 			let query;
 			bqs.set({a: "1"})
 			bqs.addEventListener("change", q => query = q);
 			bqs.set({b: "2", c: "3"}, false);
-			assert.equal(query, {b: "2", c: "3"});
+			assert.deepStrictEqual(query, {b: "2", c: "3"});
 		});
 	});
 });
