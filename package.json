@@ -15,6 +15,7 @@
     "make:emoji": "node cli/make-emoji.js",
     "server": "serve -l 80",
     "test": "ts-mocha --paths ./test/**/*.ts",
+    "ts:check": "tsc --noEmit --project tsconfig.json",
     "ts:prune": "ts-prune"
   },
   "repository": {
