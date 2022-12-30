@@ -2,6 +2,10 @@
 @import "@stein197/css-reset/index";
 @import "bootstrap/dist/css/bootstrap.min";
 
+* {
+	flex-wrap: nowrap;
+}
+
 html,
 body,
 main {

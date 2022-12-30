@@ -5,7 +5,7 @@ import EmojiList from "app/view/EmojiList";
 import EmojiSearcher from "app/EmojiSearcher";
 import ErrorAlert from "app/view/ErrorAlert";
 import BrowserQueryString from "app/BrowserQueryString";
-import ButtonGroup from "app/view/ButtonGroup";
+import Dropdown from "app/view/Dropdown";
 import {If, Then, Else} from "@stein197/react-ui/If";
 import {Switch, Case} from "@stein197/react-ui/Switch";
 import * as context from "app/view/context"
@@ -100,11 +100,11 @@ export default class Finder extends React.Component<Props, State> {
 	public override render(): React.ReactNode {
 		return (
 			<>
-				<div className="my-3 fs-2">
-					<input className="form-control p-3 w-100 fs-2" value={this.state.value} type="text" placeholder="Find an Emoji" onChange={this.onInputChange} />
-					<button className="btn-close end-0 p-4 position-absolute top-0" onClick={this.onCloseClick} />
+				<div className="my-3 fs-2 d-flex">
+					<input className="form-control" value={this.state.value} type="text" placeholder="Find an Emoji" onChange={this.onInputChange} />
+					<button className="btn-close" onClick={this.onCloseClick} />
+					<Dropdown data={Finder.VARIATIONS} onChange={this.onButtonGroupChange} />
 				</div>
-				<ButtonGroup data={Finder.VARIATIONS} className="mb-3" btnClassName="btn-dark" onChange={this.onButtonGroupChange} />
 				<Switch value={this.state.state}>
 					<Case value="init">
 						<div className="flex-grow-1 d-flex align-items-center justify-content-center">
