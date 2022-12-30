@@ -1,5 +1,4 @@
 import React from "react";
-import PromiseState from "@stein197/util/PromiseState";
 import Spinner from "@stein197/react-ui/Spinner";
 import Config from "app/Config";
 import EmojiList from "app/view/EmojiList";
