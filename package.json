@@ -14,7 +14,8 @@
     "build:dev": "npm run sass && npm run webpack:dev",
     "make:emoji": "node cli/make-emoji.js",
     "server": "serve -l 80",
-    "test": "ts-mocha --paths ./test/**/*.ts"
+    "test": "ts-mocha --paths ./test/**/*.ts",
+    "ts:prune": "ts-prune"
   },
   "repository": {
     "type": "git",

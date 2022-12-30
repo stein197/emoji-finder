@@ -44,3 +44,4 @@ Then open `localhost:80` in a browser.
 - `make:emoji` - Generates emoji data
 - `server` - Runs local server at `localhost:80`
 - `test` - Runs tests
+- `ts:prune` - Finds TypeScript dead code
