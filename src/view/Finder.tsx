@@ -55,7 +55,10 @@ export default class Finder extends React.Component<Props, State> {
 	public override render(): React.ReactNode {
 		return (
 			<>
-				<input className="form-control py-2 w-100 fs-2 my-3" value={this.state.value} type="text" placeholder="Find an Emoji" onChange={this.onInputChange} />
+				<div className="my-3 fs-2">
+					<input className="form-control p-3 w-100 fs-2" value={this.state.value} type="text" placeholder="Find an Emoji" onChange={this.onInputChange} />
+					<button className="btn-close end-0 p-4 position-absolute top-0" onClick={this.onCloseClick} />
+				</div>
 				<ButtonGroup data={Finder.VARIATIONS} className="mb-3" btnClassName="btn-dark" onChange={this.onButtonGroupChange} />
 				<Switch value={this.state.state}>
 					<Case value="init">
@@ -107,6 +110,11 @@ export default class Finder extends React.Component<Props, State> {
 				error: e as Error
 			});
 		}
+	}
+
+	private readonly onCloseClick = () => {
+		if (this.state.value)
+			this.update("", this.config.pagination, true);
 	}
 
 	private readonly onInputChange = (e: React.SyntheticEvent<HTMLInputElement, Event>): void => {
