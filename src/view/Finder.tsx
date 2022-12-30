@@ -34,7 +34,7 @@ export default class Finder extends React.Component<Props, State> {
 		super(props);
 		this.state = {
 			data: [],
-			state: PromiseState.Pending,
+			state: "init",
 			value: "",
 			amount: 0,
 			variation: Finder.VARIATION_DEFAULT,
@@ -45,7 +45,7 @@ export default class Finder extends React.Component<Props, State> {
 	public override componentDidMount(): void {
 		const value = this.context.container.get(BrowserQueryString)!.data.query ?? ""
 		this.setState({value});
-		this.update(value, this.config.pagination);
+		this.update(value, this.config.pagination, true);
 		this.context.container.get(BrowserQueryString)!.addEventListener("change", this.onQueryStringChange);
 	}
 
@@ -59,22 +59,22 @@ export default class Finder extends React.Component<Props, State> {
 				<input className="form-control py-2 w-100 fs-2 my-3" value={this.state.value} type="text" placeholder="Find an Emoji" onChange={this.onInputChange} />
 				<ButtonGroup data={Finder.VARIATIONS} className="mb-3" btnClassName="btn-dark" onChange={this.onButtonGroupChange} />
 				<Switch value={this.state.state}>
-					<Case value={PromiseState.Pending}>
+					<Case value="init">
 						<div className="flex-grow-1 d-flex align-items-center justify-content-center">
 							<Spinner r="50" strokeWidth="5" />
 						</div>
 					</Case>
-					<Case value={PromiseState.Fulfilled}>
+					<Case value={["loading", "load"]}>
 						<div className="flex-grow-1 overflow-y-scroll overflow-x-hidden">
 							<EmojiList data={this.state.data} variation={this.state.variation} />
 							<If value={this.state.next}>
 								<div className="text-center py-3">
-									<button className="btn btn-dark" onClick={this.onLoadClick}>Load more</button>
+									<button className="btn btn-dark" disabled={this.state.state === "loading"} onClick={this.onLoadClick}>{this.state.state === "load" ? "Load more" : "Loading..."}</button>
 								</div>
 							</If>
 						</div>
 					</Case>
-					<Case value={PromiseState.Rejected}>
+					<Case value="error">
 						<div className="flex-grow-1 d-flex align-items-center justify-content-center">
 							<ErrorAlert error={this.state.error!} />
 						</div>
@@ -84,11 +84,9 @@ export default class Finder extends React.Component<Props, State> {
 		);
 	}
 
-	private async update(query: string, amount: number): Promise<void> {
-		// if (this.state.value === query)
-		// 	return;
+	private async update(query: string, amount: number, init: boolean = false): Promise<void> {
 		this.setState({
-			state: PromiseState.Pending,
+			state: init ? "init" : "loading",
 			value: query,
 			error: undefined
 		});
@@ -97,14 +95,14 @@ export default class Finder extends React.Component<Props, State> {
 			const data = await searcher.search(query, amount);
 			this.setState({
 				data: data.data,
-				state: PromiseState.Fulfilled,
+				state: "load",
 				amount,
 				next: data.next
 			});
 		} catch (e) {
 			this.setState({
 				data: [],
-				state: PromiseState.Rejected,
+				state: "error",
 				amount: this.config.pagination,
 				next: false,
 				error: e as Error
@@ -122,7 +120,8 @@ export default class Finder extends React.Component<Props, State> {
 	}
 
 	private readonly onLoadClick = (): void => {
-		this.update(this.state.value, this.state.amount + this.config.pagination);
+		if (this.state.state === "load")
+			this.update(this.state.value, this.state.amount + this.config.pagination);
 	}
 
 	private readonly onQueryStringChange = (query: BrowserQueryStringMap): void => {
@@ -140,7 +139,7 @@ type Props = {}
 
 type State = {
 	data: Emoji[];
-	state: PromiseState;
+	state: "init" | "loading" | "load" | "error";
 	value: string;
 	amount: number;
 	variation: string;
