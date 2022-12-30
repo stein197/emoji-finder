@@ -105,8 +105,8 @@ export default class Finder extends React.Component<Props, State> {
 			<>
 				<div {...util.className("d-flex", "gap-" + this.config.ui.gap, "my-" + this.config.ui.gap)}>
 					<input className="form-control" value={this.state.value} type="text" placeholder="Find an Emoji" onChange={this.onInputChange} />
-					<button className="btn-close h-auto" onClick={this.onCloseClick} />
 					<Dropdown default={this.state.variation} data={Finder.VARIATIONS} onChange={this.onButtonGroupChange} variant="dark" />
+					<button className="btn-close h-auto" onClick={this.onCloseClick} />
 				</div>
 				<Switch value={this.state.state}>
 					<Case value="init">
@@ -170,10 +170,14 @@ export default class Finder extends React.Component<Props, State> {
 	}
 
 	private readonly onCloseClick = () => {
-		if (!this.state.value)
+		if (!this.state.value && !this.state.variation)
 			return;
 		this.context.container.get(BrowserQueryString)!.set({
-			query: ""
+			query: "",
+			variation: undefined
+		});
+		this.setState({
+			variation: undefined
 		});
 		this.update("", this.config.pagination, true);
 	}
