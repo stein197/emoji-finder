@@ -4,6 +4,7 @@ import BSDropdown from "react-bootstrap/Dropdown";
 import Foreach from "@stein197/react-ui/Foreach";
 import type {Button} from "app/type/Button";
 
+// TODO: Title does not update when default is set
 export default class Dropdown extends React.Component<Props, State> {
 
 	private get className(): string {
@@ -20,7 +21,7 @@ export default class Dropdown extends React.Component<Props, State> {
 	public constructor(props: Props) {
 		super(props);
 		this.state = {
-			active: props.data.findIndex(button => button.value === props.default) >= 0 ? props.default! : props.data[0].value!
+			active: props.data.findIndex(button => button.value == props.default) >= 0 ? props.default! : props.data[0].value!
 		};
 	}
 

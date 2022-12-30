@@ -88,8 +88,9 @@ export default class Finder extends React.Component<Props, State> {
 	}
 
 	public override componentDidMount(): void {
-		const value = this.context.container.get(BrowserQueryString)!.data.query ?? ""
-		this.setState({value});
+		const value = this.context.container.get(BrowserQueryString)!.data.query ?? "";
+		const variation = this.context.container.get(BrowserQueryString)!.data.variation ?? "";
+		this.setState({value, variation});
 		this.update(value, this.config.pagination, true);
 		this.context.container.get(BrowserQueryString)!.addEventListener("change", this.onQueryStringChange);
 	}
@@ -98,14 +99,13 @@ export default class Finder extends React.Component<Props, State> {
 		this.context.container.get(BrowserQueryString)!.removeEventListener("change", this.onQueryStringChange);
 	}
 
-	// TODO: Clicking close button doesn't update the query. Unify query update events
 	public override render(): React.ReactNode {
 		return (
 			<>
 				<div {...util.className("d-flex", "gap-" + this.config.ui.gap, "my-" + this.config.ui.gap)}>
 					<input className="form-control" value={this.state.value} type="text" placeholder="Find an Emoji" onChange={this.onInputChange} />
 					<button className="btn-close h-auto" onClick={this.onCloseClick} />
-					<Dropdown data={Finder.VARIATIONS} onChange={this.onButtonGroupChange} variant="dark" />
+					<Dropdown default={this.state.variation} data={Finder.VARIATIONS} onChange={this.onButtonGroupChange} variant="dark" />
 				</div>
 				<Switch value={this.state.state}>
 					<Case value="init">
@@ -196,6 +196,9 @@ export default class Finder extends React.Component<Props, State> {
 	}
 
 	private readonly onButtonGroupChange = (button: Button): void => {
+		this.context.container.get(BrowserQueryString)!.set({
+			variation: button.value
+		});
 		this.setState({
 			variation: button.value
 		});
