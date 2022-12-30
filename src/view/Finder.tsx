@@ -168,8 +168,12 @@ export default class Finder extends React.Component<Props, State> {
 	}
 
 	private readonly onCloseClick = () => {
-		if (this.state.value)
-			this.update("", this.config.pagination, true);
+		if (!this.state.value)
+			return;
+		this.context.container.get(BrowserQueryString)!.set({
+			query: ""
+		});
+		this.update("", this.config.pagination, true);
 	}
 
 	private readonly onInputChange = (e: React.SyntheticEvent<HTMLInputElement, Event>): void => {
