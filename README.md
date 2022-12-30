@@ -36,13 +36,13 @@ Then open `localhost:80` in a browser.
 - `clean` - Cleans the directory from compiled files
 - `sass` - Compiles SASS styles
 - `sass:watch` - Watches stylesheets and recompiles them when they change
-- `webpack` - Compiles TypeScript
-- `webpack:watch` - Watches TypeScript in devmode and recompiles them when they change
-- `webpack:dev` - Compiles TypeScript in devmode
+- `ts` - Compiles TypeScript
+- `ts:watch` - Watches TypeScript in devmode and recompiles them when they change
+- `ts:dev` - Compiles TypeScript in devmode
+- `ts:check` - Checks source code for compilation errors without building the project
+- `ts:prune` - Finds TypeScript dead code
 - `build` - Builds the entire project (runs all previous scripts)
 - `build:dev` - Builds the entire project in devmode (runs all previous scripts)
 - `make:emoji` - Generates emoji data
 - `server` - Runs local server at `localhost:80`
 - `test` - Runs tests
-- `ts:check` - Checks source code for compilation errors without building the project
-- `ts:prune` - Finds TypeScript dead code
