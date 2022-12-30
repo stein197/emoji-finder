@@ -6,7 +6,7 @@ import EmojiSearcher from "app/EmojiSearcher";
 import ErrorAlert from "app/view/ErrorAlert";
 import BrowserQueryString from "app/BrowserQueryString";
 import ButtonGroup from "app/view/ButtonGroup";
-import {If} from "@stein197/react-ui/If";
+import {If, Then, Else} from "@stein197/react-ui/If";
 import {Switch, Case} from "@stein197/react-ui/Switch";
 import * as context from "app/view/context"
 import type Application from "app/Application";
@@ -52,6 +52,7 @@ export default class Finder extends React.Component<Props, State> {
 		this.context.container.get(BrowserQueryString)!.removeEventListener("change", this.onQueryStringChange);
 	}
 
+	// TODO: Clicking close button doesn't update the query. Unify query update events
 	public override render(): React.ReactNode {
 		return (
 			<>
@@ -67,14 +68,23 @@ export default class Finder extends React.Component<Props, State> {
 						</div>
 					</Case>
 					<Case value={["loading", "load"]}>
-						<div className="flex-grow-1 overflow-y-scroll overflow-x-hidden">
-							<EmojiList data={this.state.data} variation={this.state.variation} />
-							<If value={this.state.next}>
-								<div className="text-center py-3">
-									<button className="btn btn-dark" disabled={this.state.state === "loading"} onClick={this.onLoadClick}>{this.state.state === "load" ? "Load more" : "Loading..."}</button>
+						<If value={this.state.data.length > 0}>
+							<Then>
+								<div className="flex-grow-1 overflow-y-scroll overflow-x-hidden">
+									<EmojiList data={this.state.data} variation={this.state.variation} />
+									<If value={this.state.next}>
+										<div className="text-center py-3">
+											<button className="btn btn-dark" disabled={this.state.state === "loading"} onClick={this.onLoadClick}>{this.state.state === "load" ? "Load more" : "Loading..."}</button>
+										</div>
+									</If>
 								</div>
-							</If>
-						</div>
+							</Then>
+							<Else>
+								<div className="flex-grow-1 d-flex align-items-center justify-content-center">
+									<p className="alert alert-dark m-0">No emojis satify the search request</p>
+								</div>
+							</Else>
+						</If>
 					</Case>
 					<Case value="error">
 						<div className="flex-grow-1 d-flex align-items-center justify-content-center">
