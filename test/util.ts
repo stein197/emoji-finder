@@ -32,5 +32,14 @@ describe("util.searchEmoji()", () => {
 	});
 });
 
-// TODO
-describe("util.className()", () => {});
+describe("util.className()", () => {
+	it("Should return empty string for empty array", () => {
+		assert.equal(util.className().className, "");
+	});
+	it("Should return string as is if there are no empty items", () => {
+		assert.equal(util.className("one", "two", "three").className, "one two three");
+	});
+	it("Should filter out empty entries when there are empty ones", () => {
+		assert.equal(util.className("one", "", "three").className, "one three");
+	});
+});
