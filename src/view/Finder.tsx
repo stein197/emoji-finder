@@ -12,15 +12,60 @@ import * as context from "app/view/context"
 import type Application from "app/Application";
 import type {Emoji} from "app/type/Emoji";
 import type {BrowserQueryStringMap} from "app/type/BrowserQueryStringMap";
+import type {Button} from "app/type/Button";
 
 export default class Finder extends React.Component<Props, State> {
 
 	public static readonly contextType: React.Context<Application> = context.get();
 
-	public static readonly VARIATION_DEFAULT: string = "Default";
-
-	private static readonly VARIATIONS: string[] = [
-		this.VARIATION_DEFAULT, "Apple", "Google", "Facebook", "Windows", "Twitter", "JoyPixels", "Samsung", "GMail", "Softbank", "DCM", "KDDI"
+	private static readonly VARIATIONS: Button[] = [
+		{
+			text: "Default"
+		},
+		{
+			text: "Apple",
+			value: "apple"
+		},
+		{
+			text: "Google",
+			value: "google"
+		},
+		{
+			text: "Facebook",
+			value: "facebook"
+		},
+		{
+			text: "Windows",
+			value: "windows"
+		},
+		{
+			text: "Twitter",
+			value: "twitter"
+		},
+		{
+			text: "JoyPixels",
+			value: "joypixels"
+		},
+		{
+			text: "Samsung",
+			value: "samsung"
+		},
+		{
+			text: "GMail",
+			value: "gmail"
+		},
+		{
+			text: "Softbank",
+			value: "softbank"
+		},
+		{
+			text: "DCM",
+			value: "dcm"
+		},
+		{
+			text: "KDDI",
+			value: "kddi"
+		},
 	];
 
 	declare public context: React.ContextType<React.Context<Application>>;
@@ -36,7 +81,6 @@ export default class Finder extends React.Component<Props, State> {
 			state: "init",
 			value: "",
 			amount: 0,
-			variation: Finder.VARIATION_DEFAULT,
 			next: true
 		};
 	}
@@ -145,9 +189,9 @@ export default class Finder extends React.Component<Props, State> {
 		this.update(query?.query ?? "", this.config.pagination);
 	}
 
-	private readonly onButtonGroupChange = (button: string): void => {
+	private readonly onButtonGroupChange = (button: Button): void => {
 		this.setState({
-			variation: button
+			variation: button.value
 		});
 	}
 }
@@ -159,7 +203,7 @@ type State = {
 	state: "init" | "loading" | "load" | "error";
 	value: string;
 	amount: number;
-	variation: string;
 	next: boolean;
+	variation?: string;
 	error?: Error;
 }
