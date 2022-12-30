@@ -31,3 +31,6 @@ describe("util.searchEmoji()", () => {
 		]);
 	});
 });
+
+// TODO
+describe("util.className()", () => {});

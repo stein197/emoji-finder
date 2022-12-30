@@ -27,3 +27,14 @@ export function searchEmoji(query: string, data: Emoji[]): Emoji[] {
 	const queryTagArray = query.trim().toLowerCase().split(REGEX_SPACE).filter(tag => tag);
 	return data.filter(emoji => queryTagArray.every(queryTag => emoji.tags.some(emojiTag => emojiTag.toLowerCase().indexOf(queryTag) >= 0)));
 }
+
+/**
+ * Creates className attribute for JSX elements. Filters out empty items.
+ * @param names List of class names.
+ * @returns Object of React-attributes that contain single `className` property.
+ */
+export function className(...names: string[]): {className: string} {
+	return {
+		className: names.filter(name => name).join(" ")
+	};
+}

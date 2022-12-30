@@ -27,6 +27,8 @@ Then open `localhost:80` in a browser.
 ## config.json file
 - `log` - Enables logging
 - `pagination` - How many emoji items to show at once
+	- `ui` - User interface settings
+		- `gap` - Gap size of layout items in Bootstrap sizes
 	- `url` - Contains different URLs
 		- `emoji` - A URL to Emoji JSON data file
 

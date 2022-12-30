@@ -1,6 +1,9 @@
 {
 	"log": true,
 	"pagination": 60,
+	"ui": {
+		"gap": 2
+	},
 	"url": {
 		"emoji": "emoji.json"
 	}

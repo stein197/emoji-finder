@@ -9,6 +9,7 @@ import Dropdown from "app/view/Dropdown";
 import {If, Then, Else} from "@stein197/react-ui/If";
 import {Switch, Case} from "@stein197/react-ui/Switch";
 import * as context from "app/view/context"
+import * as util from "app/util";
 import type Application from "app/Application";
 import type {Emoji} from "app/type/Emoji";
 import type {BrowserQueryStringMap} from "app/type/BrowserQueryStringMap";
@@ -100,7 +101,7 @@ export default class Finder extends React.Component<Props, State> {
 	public override render(): React.ReactNode {
 		return (
 			<>
-				<div className="my-3 d-flex gap-3">
+				<div {...util.className("d-flex", "gap-" + this.config.ui.gap, "my-" + this.config.ui.gap)}>
 					<input className="form-control" value={this.state.value} type="text" placeholder="Find an Emoji" onChange={this.onInputChange} />
 					<button className="btn-close h-auto" onClick={this.onCloseClick} />
 					<Dropdown data={Finder.VARIATIONS} onChange={this.onButtonGroupChange} variant="dark" />
@@ -117,7 +118,7 @@ export default class Finder extends React.Component<Props, State> {
 								<div className="flex-grow-1 overflow-y-scroll overflow-x-hidden">
 									<EmojiList data={this.state.data} variation={this.state.variation} />
 									<If value={this.state.next}>
-										<div className="text-center py-3">
+										<div {...util.className("text-center", "py-" + this.config.ui.gap)}>
 											<button className="btn btn-dark" disabled={this.state.state === "loading"} onClick={this.onLoadClick}>{this.state.state === "load" ? "Load more" : "Loading..."}</button>
 										</div>
 									</If>

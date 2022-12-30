@@ -1,9 +1,17 @@
 import React from "react";
 import Foreach from "@stein197/react-ui/Foreach";
 import EmojiListItem from "app/view/EmojiListItem";
+import * as context from "app/view/context";
+import * as util from "app/util";
+import type Application from "app/Application";
 import type {Emoji} from "app/type/Emoji";
+import Config from "app/Config";
 
 export default class EmojiList extends React.Component<Props> {
+
+	public static readonly contextType: React.Context<Application> = context.get();
+
+	declare public context: React.ContextType<React.Context<Application>>;
 
 	public constructor(props: Props) {
 		super(props);
@@ -12,7 +20,7 @@ export default class EmojiList extends React.Component<Props> {
 
 	public override render(): React.ReactNode {
 		return (
-			<div className="row g-3">
+			<div {...util.className("row", `g-${this.context.container.get(Config)!.data!.ui.gap}`)}>
 				<Foreach data={this.props.data}>
 					{emoji => (
 						<div key={emoji.codes.join("-")} className="col col-6 col-md-4 col-lg-3 col-xl-2">
