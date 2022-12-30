@@ -15,6 +15,7 @@ import type {Emoji} from "app/type/Emoji";
 import type {BrowserQueryStringMap} from "app/type/BrowserQueryStringMap";
 import type {Button} from "app/type/Button";
 
+// TODO: Changing query string automatically updates the value. Make the code depend only on changes?
 export default class Finder extends React.Component<Props, State> {
 
 	public static readonly contextType: React.Context<Application> = context.get();
