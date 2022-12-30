@@ -30,10 +30,10 @@ export default class EmojiListItem extends React.Component<Props> {
 					<p>
 						<Foreach data={this.props.data.tags}>
 							{tag => (
-								<>
+								<React.Fragment key={tag}>
 									<a href="javascript:void(0)" data-tag={tag} onClick={this.onTagClick}>{`#${tag}`}</a>
 									&#32;
-								</>
+								</React.Fragment>
 							)}
 						</Foreach>
 					</p>

@@ -24,7 +24,7 @@ export default class ButtonGroup extends React.Component<Props, State> {
 			<div className={this.className}>
 				<Foreach data={this.props.data}>
 					{button => (
-						<button className={this.getButtonClassName(button)} onClick={this.onClick} data-text={button}>{button}</button>
+						<button key={button} className={this.getButtonClassName(button)} onClick={this.onClick} data-text={button}>{button}</button>
 					)}
 				</Foreach>
 			</div>
