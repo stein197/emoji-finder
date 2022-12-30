@@ -100,10 +100,10 @@ export default class Finder extends React.Component<Props, State> {
 	public override render(): React.ReactNode {
 		return (
 			<>
-				<div className="my-3 fs-2 d-flex">
+				<div className="my-3 d-flex gap-3">
 					<input className="form-control" value={this.state.value} type="text" placeholder="Find an Emoji" onChange={this.onInputChange} />
-					<button className="btn-close" onClick={this.onCloseClick} />
-					<Dropdown data={Finder.VARIATIONS} onChange={this.onButtonGroupChange} />
+					<button className="btn-close h-auto" onClick={this.onCloseClick} />
+					<Dropdown data={Finder.VARIATIONS} onChange={this.onButtonGroupChange} variant="dark" />
 				</div>
 				<Switch value={this.state.state}>
 					<Case value="init">

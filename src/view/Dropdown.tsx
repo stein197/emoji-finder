@@ -26,7 +26,7 @@ export default class Dropdown extends React.Component<Props, State> {
 
 	public override render(): React.ReactNode {
 		return (
-			<DropdownButton className={this.className} title={this.activeButton.text} onSelect={this.onSelect}>
+			<DropdownButton variant={this.props.variant} menuVariant={this.props.variant} className={this.className} title={this.activeButton.text} onSelect={this.onSelect}>
 				<Foreach data={this.props.data}>
 					{button => (
 						<BSDropdown.Item key={button.value} active={this.state.active === button.value} eventKey={button.value}>{button.text}</BSDropdown.Item>
@@ -53,6 +53,7 @@ type Props = {
 	data: Button[];
 	default?: string;
 	className?: string;
+	variant?: string;
 	onChange?(button: Button): void;
 }
 
