@@ -22,7 +22,8 @@ export default class Finder extends React.Component<Props, State> {
 
 	private static readonly VARIATIONS: Button[] = [
 		{
-			text: "Default"
+			text: "Default",
+			value: "default"
 		},
 		{
 			text: "Apple",
