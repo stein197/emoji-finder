@@ -4,7 +4,6 @@ import Config from "app/Config";
 import EmojiList from "app/view/EmojiList";
 import EmojiSearcher from "app/EmojiSearcher";
 import ErrorAlert from "app/view/ErrorAlert";
-import BrowserQueryString from "app/BrowserQueryString";
 import Dropdown from "app/view/Dropdown";
 import {If, Then, Else} from "@stein197/react-ui/If";
 import {Switch, Case} from "@stein197/react-ui/Switch";
@@ -12,18 +11,18 @@ import * as context from "app/view/context"
 import * as util from "app/util";
 import type Application from "app/Application";
 import type {Emoji} from "app/type/Emoji";
-import type {BrowserQueryStringMap} from "app/type/BrowserQueryStringMap";
 import type {Button} from "app/type/Button";
 
-// TODO: Changing query string automatically updates the value. Make the code depend only on changes?
 export default class Finder extends React.Component<Props, State> {
 
 	public static readonly contextType: React.Context<Application> = context.get();
 
+	private static readonly VARIATION_DEFAULT: string = "default";
+
 	private static readonly VARIATIONS: Button[] = [
 		{
 			text: "Default",
-			value: "default"
+			value: this.VARIATION_DEFAULT
 		},
 		{
 			text: "Apple",
@@ -71,7 +70,7 @@ export default class Finder extends React.Component<Props, State> {
 		},
 	];
 
-	declare public context: React.ContextType<React.Context<Application>>;
+	public declare readonly context: React.ContextType<React.Context<Application>>;
 
 	private get config(): Exclude<typeof Config.prototype.data, null> {
 		return this.context.container.get(Config)!.data!;
@@ -82,30 +81,28 @@ export default class Finder extends React.Component<Props, State> {
 		this.state = {
 			data: [],
 			state: "init",
-			value: "",
+			query: props.query ?? "",
 			amount: 0,
-			next: true
+			next: true,
+			variation: props.variation
 		};
 	}
 
 	public override componentDidMount(): void {
-		const value = this.context.container.get(BrowserQueryString)!.data.query ?? "";
-		const variation = this.context.container.get(BrowserQueryString)!.data.variation ?? "";
-		this.setState({value, variation});
-		this.update(value, this.config.pagination, true);
-		this.context.container.get(BrowserQueryString)!.addEventListener("change", this.onQueryStringChange);
+		this.fetch(this.state.query, this.config.pagination);
 	}
 
-	public override componentWillUnmount(): void {
-		this.context.container.get(BrowserQueryString)!.removeEventListener("change", this.onQueryStringChange);
+	public override componentDidUpdate(...[, prevState]: [never, Readonly<State>]): void {
+		if (this.state.query !== prevState.query || this.state.variation !== prevState.variation)
+			this.props.onChange?.(this.state.query, this.state.variation);
 	}
 
 	public override render(): React.ReactNode {
 		return (
 			<>
 				<div {...util.className("d-flex", "gap-" + this.config.ui.gap, "my-" + this.config.ui.gap)}>
-					<input className="form-control" value={this.state.value} type="text" placeholder="Find an Emoji" onChange={this.onInputChange} />
-					<Dropdown default={this.state.variation} data={Finder.VARIATIONS} onChange={this.onButtonGroupChange} variant="dark" />
+					<input className="form-control" value={this.state.query} type="text" placeholder="Find an Emoji" onChange={this.onInputChange} />
+					<Dropdown default={this.state.variation} data={Finder.VARIATIONS} onChange={this.onVariationDropdownChange} variant="dark" />
 					<button className="btn-close h-auto" onClick={this.onCloseClick} />
 				</div>
 				<Switch value={this.state.state}>
@@ -118,7 +115,7 @@ export default class Finder extends React.Component<Props, State> {
 						<If value={this.state.data.length > 0}>
 							<Then>
 								<div className="flex-grow-1 overflow-y-scroll overflow-x-hidden">
-									<EmojiList data={this.state.data} variation={this.state.variation} />
+									<EmojiList data={this.state.data} variation={this.state.variation} onTagClick={this.onTagClick} />
 									<If value={this.state.next}>
 										<div {...util.className("text-center", "py-" + this.config.ui.gap)}>
 											<button className="btn btn-dark" disabled={this.state.state === "loading"} onClick={this.onLoadClick}>{this.state.state === "load" ? "Load more" : "Loading..."}</button>
@@ -143,11 +140,12 @@ export default class Finder extends React.Component<Props, State> {
 		);
 	}
 
-	private async update(query: string, amount: number, init: boolean = false): Promise<void> {
+	private async fetch(query: string, amount: number): Promise<void> {
 		this.setState({
-			state: init ? "init" : "loading",
-			value: query,
-			error: undefined
+			state: this.state.state === "init" ? "init" : "loading",
+			query,
+			error: undefined,
+			amount
 		});
 		try {
 			const searcher = this.context.container.get(EmojiSearcher)!;
@@ -170,52 +168,57 @@ export default class Finder extends React.Component<Props, State> {
 	}
 
 	private readonly onCloseClick = () => {
-		if (!this.state.value && !this.state.variation)
+		if (!this.state.query && !this.state.variation)
 			return;
-		this.context.container.get(BrowserQueryString)!.set({
-			query: "",
-			variation: undefined
-		});
 		this.setState({
 			variation: undefined
 		});
-		this.update("", this.config.pagination, true);
+		this.fetch("", this.config.pagination);
 	}
 
 	private readonly onInputChange = (e: React.SyntheticEvent<HTMLInputElement, Event>): void => {
 		const target = e.target as HTMLInputElement;
 		const value = target.value;
-		this.context.container.get(BrowserQueryString)!.set({
-			query: value
-		});
-		this.update(value, this.config.pagination);
+		this.fetch(value, this.config.pagination);
 	}
 
 	private readonly onLoadClick = (): void => {
-		if (this.state.state === "load")
-			this.update(this.state.value, this.state.amount + this.config.pagination);
+		if (this.state.state !== "loading")
+			this.fetch(this.state.query, this.state.amount + this.config.pagination);
 	}
 
-	private readonly onQueryStringChange = (query: BrowserQueryStringMap): void => {
-		this.update(query?.query ?? "", this.config.pagination);
-	}
-
-	private readonly onButtonGroupChange = (button: Button): void => {
-		this.context.container.get(BrowserQueryString)!.set({
-			variation: button.value
-		});
+	private readonly onVariationDropdownChange = (button: Button): void => {
 		this.setState({
 			variation: button.value
 		});
 	}
+
+	private readonly onTagClick = (tag: string): void => {
+		this.fetch(tag, this.config.pagination);
+	}
 }
 
-type Props = {}
+type Props = {
+
+	/**
+	 * Current query string.
+	 * @defaultValue `""`
+	 */
+	query?: string;
+
+	/**
+	 * Variation of icons.
+	 * @defaultValue `""`
+	 */
+	variation?: string;
+
+	onChange?(query: string, variation?: string): void;
+}
 
 type State = {
 	data: Emoji[];
 	state: "init" | "loading" | "load" | "error";
-	value: string;
+	query: string;
 	amount: number;
 	next: boolean;
 	variation?: string;

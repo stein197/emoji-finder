@@ -1,7 +1,6 @@
 import React from "react";
 import Foreach from "@stein197/react-ui/Foreach";
 import TooltipButton from "app/view/TooltipButton";
-import BrowserQueryString from "app/BrowserQueryString";
 import * as context from "app/view/context";
 import type Application from "app/Application";
 import type {Emoji} from "app/type/Emoji";
@@ -26,7 +25,7 @@ export default class EmojiListItem extends React.Component<Props> {
 						<Foreach data={this.props.data.tags}>
 							{tag => (
 								<React.Fragment key={tag}>
-									<a href="javascript:void(0)" data-tag={tag} onClick={this.onTagClick}>{`#${tag}`}</a>
+									<a href="" data-tag={tag} onClick={this.onTagClick}>{`#${tag}`}</a>
 									&#32;
 								</React.Fragment>
 							)}
@@ -43,17 +42,17 @@ export default class EmojiListItem extends React.Component<Props> {
 	}
 
 	private readonly onTagClick = (e: React.SyntheticEvent<HTMLAnchorElement, MouseEvent>): void => {
+		e.preventDefault();
 		const target = e.target as HTMLAnchorElement;
 		const tag = target.getAttribute("data-tag");
 		if (!tag)
 			return;
-		this.context.container.get(BrowserQueryString)!.set({
-			query: tag
-		});
+		this.props.onTagClick?.(tag);
 	}
 }
 
 type Props = {
 	data: Emoji;
 	variation?: string;
+	onTagClick?(tag: string): void;
 }

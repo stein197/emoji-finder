@@ -1,11 +1,11 @@
 import React from "react";
 import Foreach from "@stein197/react-ui/Foreach";
 import EmojiListItem from "app/view/EmojiListItem";
+import Config from "app/Config";
 import * as context from "app/view/context";
 import * as util from "app/util";
 import type Application from "app/Application";
 import type {Emoji} from "app/type/Emoji";
-import Config from "app/Config";
 
 export default class EmojiList extends React.Component<Props> {
 
@@ -24,7 +24,7 @@ export default class EmojiList extends React.Component<Props> {
 				<Foreach data={this.props.data}>
 					{emoji => (
 						<div key={emoji.codes.join("-")} className="col col-6 col-md-4 col-lg-3 col-xl-2">
-							<EmojiListItem data={emoji} variation={this.props.variation} />
+							<EmojiListItem data={emoji} variation={this.props.variation} onTagClick={this.props.onTagClick} />
 						</div>
 					)}
 				</Foreach>
@@ -37,4 +37,5 @@ type Props = {
 	data: Emoji[];
 	variation?: string;
 	className?: string;
+	onTagClick?(tag: string): void;
 }

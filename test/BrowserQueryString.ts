@@ -11,33 +11,26 @@ describe("BrowserQueryString", () => {
 		});
 		bqs = new BrowserQueryString(dom.window);
 	});
-	describe("BrowserQueryString.set()", () => {
-		it("Should fire an event when query string changes", () => {
-			const tracker = new assert.CallTracker();
-			const noop = tracker.calls(() => {}, 1);
-			bqs.addEventListener("change", noop);
-			bqs.set({a: "abc"});
-			tracker.verify();
-		});
-		it("Shouldn't fire an event when query string is the same", () => {
-			let flag = false;
-			bqs.addEventListener("change", () => flag = true);
-			bqs.set({});
-			assert.equal(flag, false);
-		});
-		it("Should pass correct query string object to listeners when \"merge\" === true", () => {
-			let query;
+	describe("BrowserQueryString.data", () => {
+		it("Should return correct object when \"merge\" === true", () => {
 			bqs.set({a: "1"})
-			bqs.addEventListener("change", q => query = q);
 			bqs.set({b: "2", c: "3"}, true);
-			assert.deepStrictEqual(query, {a: "1", b: "2", c: "3"});
+			assert.deepStrictEqual(bqs.data, {a: "1", b: "2", c: "3"});
 		});
-		it("Should pass correct query string object to listeners when \"merge\" === false", () => {
-			let query;
+		it("Should return correct object \"merge\" === false", () => {
 			bqs.set({a: "1"})
-			bqs.addEventListener("change", q => query = q);
 			bqs.set({b: "2", c: "3"}, false);
-			assert.deepStrictEqual(query, {b: "2", c: "3"});
+			assert.deepStrictEqual(bqs.data, {b: "2", c: "3"});
+		});
+		it("Should return the same object when empty one was set and \"merge\" === true", () => {
+			bqs.set({a: "1"});
+			bqs.set({}, true);
+			assert.deepStrictEqual(bqs.data, {a: "1"});
+		});
+		it("Should return empty when empty one was set and \"merge\" === false", () => {
+			bqs.set({a: "1"});
+			bqs.set({}, false);
+			assert.deepStrictEqual(bqs.data, {});
 		});
 	});
 });

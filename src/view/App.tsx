@@ -3,9 +3,11 @@ import PromiseState from "@stein197/util/PromiseState";
 import Spinner from "@stein197/react-ui/Spinner";
 import ErrorAlert from "app/view/ErrorAlert";
 import Finder from "app/view/Finder";
+import BrowserQueryString from "app/BrowserQueryString";
 import {Switch, Case} from "@stein197/react-ui/Switch";
 import * as context from "app/view/context";
 import type Application from "app/Application";
+import type {BrowserQueryStringMap} from "app/type/BrowserQueryStringMap";
 
 /**
  * Root React component.
@@ -13,6 +15,12 @@ import type Application from "app/Application";
 export default class App extends React.Component<Props, State> {
 
 	public static readonly contextType: React.Context<Application> = context.get();
+
+	public declare readonly context: React.ContextType<React.Context<Application>>;
+
+	private get query(): Partial<BrowserQueryStringMap> | null {
+		return this.props.application.container.get(BrowserQueryString)?.data ?? null;
+	}
 
 	public constructor(props: Props) {
 		super(props);
@@ -45,7 +53,7 @@ export default class App extends React.Component<Props, State> {
 					<Case value={PromiseState.Fulfilled}>
 						<section className="h-full">
 							<div className="h-100 container d-flex flex-column flex-nowrap">
-								<Finder />
+								<Finder query={this.query?.query} variation={this.query?.variation} onChange={this.onFinderChange} />
 							</div>
 						</section>
 					</Case>
@@ -66,6 +74,10 @@ export default class App extends React.Component<Props, State> {
 			state: error ? PromiseState.Rejected : PromiseState.Fulfilled,
 			error
 		});
+	}
+
+	private readonly onFinderChange = (query: string, variation?: string): void => {
+		this.props.application.container.get(BrowserQueryString)?.set({query, variation});
 	}
 }
 
