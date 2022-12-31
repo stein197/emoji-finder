@@ -6,6 +6,15 @@
 	flex-wrap: nowrap;
 }
 
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #373b3e;
+	border-radius: 10px;
+}
+
 html,
 body,
 main {
