@@ -5,7 +5,6 @@ import Config from "app/Config";
 import * as context from "app/view/context";
 import * as util from "app/util";
 import type Application from "app/Application";
-import type {Emoji} from "app/type/Emoji";
 
 export default class EmojiList extends React.Component<Props> {
 
@@ -34,7 +33,7 @@ export default class EmojiList extends React.Component<Props> {
 }
 
 type Props = {
-	data: Emoji[];
+	data: app.emoji.Emoji[];
 	variation?: string;
 	className?: string;
 	onTagClick?(tag: string): void;

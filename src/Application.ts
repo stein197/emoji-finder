@@ -9,14 +9,12 @@ import {EventDispatcher} from "@stein197/observer";
 import * as util from "app/util";
 import * as context from "app/view/context";
 import type {EventEmitter} from "@stein197/observer";
-import type {ApplicationEventMap} from "app/type/event/ApplicationEventMap";
-import type { BrowserQueryStringMap } from "./type/BrowserQueryStringMap";
 
-export default class Application implements EventEmitter<ApplicationEventMap> {
+export default class Application implements EventEmitter<app.event.ApplicationEventMap> {
 
-	public readonly container: Container<[Config, EmojiSearcher, BrowserQueryString<BrowserQueryStringMap>]> = new Container();
+	public readonly container: Container<[Config, EmojiSearcher, BrowserQueryString<app.bqs.Data>]> = new Container();
 
-	private readonly __dispatcher: EventDispatcher<ApplicationEventMap> = new EventDispatcher();
+	private readonly __dispatcher: EventDispatcher<app.event.ApplicationEventMap> = new EventDispatcher();
 	private __loaded: boolean = false;
 	private __loadResult?: Error;
 
@@ -28,18 +26,18 @@ export default class Application implements EventEmitter<ApplicationEventMap> {
 		this.load();
 	}
 
-	public addEventListener<K extends keyof ApplicationEventMap>(key: K, listener: ApplicationEventMap[K]): void {
+	public addEventListener<K extends keyof app.event.ApplicationEventMap>(key: K, listener: app.event.ApplicationEventMap[K]): void {
 		if (key === "load" && this.__loaded)
 			listener(this.__loadResult);
 		else
 			this.__dispatcher.addEventListener(key, listener);
 	}
 
-	public removeEventListener<K extends keyof ApplicationEventMap>(key: K, listener: ApplicationEventMap[K]): void {
+	public removeEventListener<K extends keyof app.event.ApplicationEventMap>(key: K, listener: app.event.ApplicationEventMap[K]): void {
 		this.__dispatcher.removeEventListener(key, listener);
 	}
 
-	public onceEventListener<K extends keyof ApplicationEventMap>(key: K, listener: ApplicationEventMap[K]): void {
+	public onceEventListener<K extends keyof app.event.ApplicationEventMap>(key: K, listener: app.event.ApplicationEventMap[K]): void {
 		if (key === "load" && this.__loaded)
 			listener(this.__loadResult);
 		else

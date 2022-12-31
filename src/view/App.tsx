@@ -7,7 +7,6 @@ import BrowserQueryString from "app/BrowserQueryString";
 import {Switch, Case} from "@stein197/react-ui/Switch";
 import * as context from "app/view/context";
 import type Application from "app/Application";
-import type {BrowserQueryStringMap} from "app/type/BrowserQueryStringMap";
 
 /**
  * Root React component.
@@ -18,7 +17,7 @@ export default class App extends React.Component<Props, State> {
 
 	public declare readonly context: React.ContextType<React.Context<Application>>;
 
-	private get query(): Partial<BrowserQueryStringMap> | null {
+	private get query(): Partial<app.bqs.Data> | null {
 		return this.props.application.container.get(BrowserQueryString)?.data ?? null;
 	}
 

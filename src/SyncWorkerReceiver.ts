@@ -1,17 +1,14 @@
-import type {WorkerContext} from "app/type/WorkerContext";
-import type {WorkerMessage} from "app/type/WorkerMessage";
-
 export default class SyncWorkerReceiver<T, U> {
 
 	public handler: ((request: T) => Promise<U>) | null = null;
 
-	public constructor(private readonly __context: WorkerContext) {}
+	public constructor(private readonly __context: app.worker.Context) {}
 
 	public run(): void {
 		this.__context.onmessage = this.onMessage;
 	}
 
-	private onMessage = async (e: MessageEvent<WorkerMessage<T>>): Promise<void> => {
+	private onMessage = async (e: MessageEvent<app.worker.Message<T>>): Promise<void> => {
 		if (!this.handler)
 			return;
 		const {id, data} = e.data;
@@ -19,6 +16,6 @@ export default class SyncWorkerReceiver<T, U> {
 		this.__context.postMessage({
 			id,
 			data: result
-		} as WorkerMessage<U>);
+		} as app.worker.Message<U>);
 	}
 }

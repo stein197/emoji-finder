@@ -1,6 +1,5 @@
 import ResponseError from "app/error/ResponseError";
 import * as object from "@stein197/util/object";
-import type {Emoji} from "app/type/Emoji";
 
 export const URL_CONFIG: string = "/config.json";
 export const URL_WORKER_EMOJI: string = "/worker/emoji.js";
@@ -23,7 +22,7 @@ export async function loadJSON<T>(url: string, log: boolean = false): Promise<T>
 	return data;
 }
 
-export function searchEmoji(query: string, data: Emoji[]): Emoji[] {
+export function searchEmoji(query: string, data: app.emoji.Emoji[]): app.emoji.Emoji[] {
 	const queryTagArray = query.trim().toLowerCase().split(REGEX_SPACE).filter(tag => tag);
 	return data.filter(emoji => queryTagArray.every(queryTag => emoji.tags.some(emojiTag => emojiTag.toLowerCase().indexOf(queryTag) >= 0)));
 }

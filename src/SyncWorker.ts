@@ -1,5 +1,4 @@
 import type {ObjectMap} from "@stein197/ts-util";
-import type {WorkerMessage} from "app/type/WorkerMessage";
 
 export default class SyncWorker<T, U> {
 
@@ -21,12 +20,12 @@ export default class SyncWorker<T, U> {
 			this.__worker.postMessage({
 				id: this.__id,
 				data: data
-			} as WorkerMessage<T>);
+			} as app.worker.Message<T>);
 		});
 
 	}
 
-	private onMessage = (e: MessageEvent<WorkerMessage<U>>): void => {
+	private onMessage = (e: MessageEvent<app.worker.Message<U>>): void => {
 		const {id, data} = e.data;
 		const callback = this.__postResolveCallbackMap[id];
 		if (!callback)

@@ -1,5 +1,3 @@
-import type {Constructor} from "app/type/Constructor";
-
 /**
  * Primitive dependency container.
  */
@@ -14,7 +12,7 @@ export default class Container<T extends any[]> {
 	 * @param type Type of instance to return.
 	 * @returns Instance or `null` if it's not been added yet.
 	 */
-	public get<U extends T[number]>(type: Constructor<U>): U | null {
+	public get<U extends T[number]>(type: app.Constructor<U>): U | null {
 		for (const object of this.__data)
 			if (object instanceof type)
 				return object;

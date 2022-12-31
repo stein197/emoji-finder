@@ -10,8 +10,6 @@ import {Switch, Case} from "@stein197/react-ui/Switch";
 import * as context from "app/view/context"
 import * as util from "app/util";
 import type Application from "app/Application";
-import type {Emoji} from "app/type/Emoji";
-import type {Button} from "app/type/Button";
 
 export default class Finder extends React.Component<Props, State> {
 
@@ -19,7 +17,7 @@ export default class Finder extends React.Component<Props, State> {
 
 	private static readonly VARIATION_DEFAULT: string = "default";
 
-	private static readonly VARIATIONS: Button[] = [
+	private static readonly VARIATIONS: app.Button[] = [
 		{
 			text: "Default",
 			value: this.VARIATION_DEFAULT
@@ -187,7 +185,7 @@ export default class Finder extends React.Component<Props, State> {
 			this.fetch(this.state.query, this.state.amount + this.config.pagination);
 	}
 
-	private readonly onVariationDropdownChange = (button: Button): void => {
+	private readonly onVariationDropdownChange = (button: app.Button): void => {
 		this.setState({
 			variation: button.value
 		});
@@ -216,7 +214,7 @@ type Props = {
 }
 
 type State = {
-	data: Emoji[];
+	data: app.emoji.Emoji[];
 	state: "init" | "loading" | "load" | "error";
 	query: string;
 	amount: number;

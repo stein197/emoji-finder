@@ -1,17 +1,15 @@
 import * as qs from "@stein197/qs";
 import * as object from "@stein197/util/object";
-import type {BrowserQueryStringMap} from "app/type/BrowserQueryStringMap";
-import type {BrowserQueryStringContext} from "app/type/BrowserQueryStringContext";
 
 export default class BrowserQueryString<T> {
 
-	public get data(): Partial<BrowserQueryStringMap> {
+	public get data(): Partial<app.bqs.Data> {
 		return qs.parse(this.__context.location.search.replace(/^\?/, ""), {
 			scalars: false
-		}) as Partial<BrowserQueryStringMap>;
+		}) as Partial<app.bqs.Data>;
 	}
 
-	public constructor(private readonly __context: BrowserQueryStringContext) {}
+	public constructor(private readonly __context: app.bqs.Context) {}
 
 	public set(query: Partial<T>, merge: boolean = true): void {
 		const prevQuery = this.data;

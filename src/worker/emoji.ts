@@ -1,21 +1,18 @@
 import Config from "app/config";
 import SyncWorkerReceiver from "app/SyncWorkerReceiver";
 import * as util from "app/util";
-import type {Emoji} from "app/type/Emoji";
-import type {EmojiWorkerRequest} from "app/type/EmojiWorkerRequest";
-import type {EmojiWorkerResponse} from "app/type/EmojiWorkerResponse";
 
 const config: Config = new Config(util.URL_CONFIG);
 let loaded: boolean = false;
-let data: Emoji[] = [];
+let data: app.emoji.Emoji[] = [];
 
 (function main(): void {
-	const runner = new SyncWorkerReceiver<EmojiWorkerRequest, EmojiWorkerResponse>(self);
+	const runner = new SyncWorkerReceiver<app.emoji.worker.Request, app.emoji.worker.Response>(self);
 	runner.handler = onMessage;
 	runner.run();
 })();
 
-async function onMessage(request: EmojiWorkerRequest): Promise<EmojiWorkerResponse> {
+async function onMessage(request: app.emoji.worker.Request): Promise<app.emoji.worker.Response> {
 	try {
 		await tryLoad();
 		const result = util.searchEmoji(request.query, data);
@@ -36,6 +33,6 @@ async function tryLoad(): Promise<void> {
 	if (loaded)
 		return;
 	await config.load();
-	data = await util.loadJSON<Emoji[]>(`/${config.data!.url.emoji}`);
+	data = await util.loadJSON<app.emoji.Emoji[]>(`/${config.data!.url.emoji}`);
 	loaded = true;
 }

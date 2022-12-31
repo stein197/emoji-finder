@@ -1,10 +1,9 @@
 import "mocha";
 import assert from "assert";
 import * as util from "app/util";
-import type {Emoji} from "app/type/Emoji";
 
 describe("util.searchEmoji()", () => {
-	const data: Emoji[] = [
+	const data: app.emoji.Emoji[] = [
 		{tags: ["abc", "def", "ghi"], codes: [], variations: {}},
 		{tags: ["def", "ghi", "jkl"], codes: [], variations: {}},
 		{tags: ["mno", "pqr", "stu"], codes: [], variations: {}}

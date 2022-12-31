@@ -3,7 +3,6 @@ import Foreach from "@stein197/react-ui/Foreach";
 import TooltipButton from "app/view/TooltipButton";
 import * as context from "app/view/context";
 import type Application from "app/Application";
-import type {Emoji} from "app/type/Emoji";
 
 export default class EmojiListItem extends React.Component<Props> {
 
@@ -52,7 +51,7 @@ export default class EmojiListItem extends React.Component<Props> {
 }
 
 type Props = {
-	data: Emoji;
+	data: app.emoji.Emoji;
 	variation?: string;
 	onTagClick?(tag: string): void;
 }

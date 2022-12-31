@@ -2,7 +2,6 @@ import React from "react";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import BSDropdown from "react-bootstrap/Dropdown";
 import Foreach from "@stein197/react-ui/Foreach";
-import type {Button} from "app/type/Button";
 
 // TODO: Tests
 export default class Dropdown extends React.Component<Props, State> {
@@ -14,7 +13,7 @@ export default class Dropdown extends React.Component<Props, State> {
 		return result.join(" ");
 	}
 
-	private get activeButton(): Button | null {
+	private get activeButton(): app.Button | null {
 		return this.props.data.find(button => button.value === this.state.active) ?? null;
 	}
 
@@ -57,11 +56,11 @@ export default class Dropdown extends React.Component<Props, State> {
 }
 
 type Props = {
-	data: Button[];
+	data: app.Button[];
 	default?: string;
 	className?: string;
 	variant?: string;
-	onChange?(button: Button): void;
+	onChange?(button: app.Button): void;
 }
 
 type State = {
