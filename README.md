@@ -15,10 +15,9 @@ Then open `localhost:80` in a browser.
 - `cli/` - Node.js scripts
 - `src/` - TypeScript source code
 	- `error/` - Error classes
-	- `type/` - TypeScript types
-		- `event/` - Event maps
 	- `view/` - React components
 	- `worker/` - Web workers
+	- `globa.d.ts` - Global typings
 - `config.json` - The main app configuration file
 - `index.html` - HTML entry point
 - `index.scss` - SCSS entry point
