@@ -17,7 +17,7 @@ Then open `localhost:80` in a browser.
 	- `error/` - Error classes
 	- `view/` - React components
 	- `worker/` - Web workers
-	- `globa.d.ts` - Global typings
+	- `global.d.ts` - Global typings
 - `config.json` - The main app configuration file
 - `index.html` - HTML entry point
 - `index.scss` - SCSS entry point
